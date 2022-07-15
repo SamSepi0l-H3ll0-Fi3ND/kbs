@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+
+import LoginForm from "./components/LoginForm";
 
 function App() {
+  const [email, setEmail] = useState("test@tes.com");
+  const [password, setPassword] = useState("Has@12123321123");
+  const [userData, setUserData] = useState({});
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    const resp = await fetch("http://192.168.0.125:8000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+
+    const data = await resp.json();
+    setUserData(data);
+    console.log(data);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <LoginForm />
     </div>
   );
 }
