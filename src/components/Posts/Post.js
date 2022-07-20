@@ -18,17 +18,17 @@ const post = {
   },
 };
 
-const Post = ({}) => {
+const Post = () => {
   return (
-    <div className="card card-compact w-96 shadow-xl m-4 bg-base-300">
-      <div className="flex justify-between items-center p-2">
+    <div className="card card-compact w-full shadow-xl mb-4 bg-base-300">
+      <div className="flex justify-between items-center p-4">
         <div className="flex flex-col items-start">
           <p>{post.user.name}</p>
           <p className="text-sm">{post.created_at.slice(0, 10)}</p>
         </div>
         <div className="avatar w-16">
           <div className=" mask mask-squircle">
-            <img src="https://placeimg.com/192/192/people" />
+            <img src="https://placeimg.com/192/192/people" alt="" />
           </div>
         </div>
       </div>

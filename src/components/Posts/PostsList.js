@@ -17,11 +17,18 @@ const PostLists = () => {
     })();
   }, []);
 
-  const postsToDisplay = posts.map((post) => (
-    <Post post={post} key={post.id} />
-  ));
+  // const postsToDisplay = posts.map((post) => (
+  //   <Post post={post} key={post.id} />
+  // ));
 
-  return <div className="w-full ml-auto relative">{postsToDisplay}</div>;
+  return (
+    <div className="overflow-y-scroll scrollbar-hide">
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+    </div>
+  );
 };
 
 export default PostLists;
