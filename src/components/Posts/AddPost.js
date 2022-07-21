@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../../UserContext";
+import API from "../../env";
 
 const AddPost = () => {
   const ctx = useContext(UserContext);
@@ -9,7 +10,7 @@ const AddPost = () => {
   const addPostHandler = async (e) => {
     e.preventDefault();
 
-    await fetch("http://192.168.0.125:8000/api/posts/add", {
+    const resp = await fetch(`${API}/api/posts/add`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -18,19 +19,23 @@ const AddPost = () => {
       },
       body: JSON.stringify({
         body: postInput,
+        tags: [],
       }),
     });
+
+    console.log(resp);
   };
 
   return (
     <form onSubmit={addPostHandler}>
-      <div className="card w-full bg-base-300 p-4 shadow-xl">
+      <div className="card w-full bg-base-300 p-4 shadow-lg">
         <div className="form-control">
           <div className="input-group max-h-16">
             <textarea
               placeholder="Post me!"
               className="textarea w-full"
               style={{ resize: "none" }}
+              onChange={(e) => setPostInput(e.target.value)}
             />
             <button className="btn min-h-16 btn-square">
               <svg

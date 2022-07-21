@@ -3,20 +3,21 @@ import { Navigate } from "react-router-dom";
 
 import loginImg from "../assets/imgs/login.svg";
 import UserContext from "../UserContext";
+import API from "../env";
 
 const LoginForm = () => {
   const ctx = useContext(UserContext);
 
+  const { token } = ctx.userData;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isValid, setIsValid] = useState(false);
-  const [userData, setUserData] = useState();
 
   const loginFormHandler = async (e) => {
     e.preventDefault();
 
     try {
-      const resp = await fetch("http://192.168.0.125:8000/api/login", {
+      const resp = await fetch(`${API}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,12 +32,7 @@ const LoginForm = () => {
       const data = await resp.json();
 
       ctx.setUserData(data);
-      setUserData(data);
-    } catch (e) {
-      setIsValid(!isValid);
-
-      setTimeout(() => setIsValid(false), 500);
-    }
+    } catch (e) {}
   };
 
   return (
@@ -86,7 +82,7 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
-      {userData && <Navigate to="/dashboard" />}
+      {token && <Navigate to="/dashboard" />}
     </form>
   );
 };

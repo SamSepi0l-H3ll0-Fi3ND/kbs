@@ -1,7 +1,7 @@
-import React from "react";
-import ProfileCard from "../components/ProfileCard";
+import React, { useContext } from "react";
+import UserCard from "../components/user/UserCard";
 import Nav from "../components/Nav";
-import UserInfo from "../components/UserInfo";
+import UserInfo from "../components/user/UserInfo";
 import PostsContainer from "../components/Posts/PostsContainer";
 import AddPost from "../components/Posts/AddPost";
 import PostsList from "../components/Posts/PostsList";
@@ -10,53 +10,55 @@ import Post from "../components/Posts/Post";
 
 import postImg from "../assets/imgs/posts.svg";
 
-const Layout = () => {
-  return (
-    // <div className="p-4 flex gap-4 max-h-screen overflow-hidden ">
-    //   <div className="flex justify-between flex-col gap-4">
-    //     <div>
-    //       <h1 className="mb-4">Logo</h1>
-    //       <Nav />
-    //     </div>
-    //     <UserInfo />
-    //   </div>
-    //
-    //   <div className="flex flex-col gap-4 grow">
-    //     <div className="flex flex-col gap-4 ">
-    //       <SearchPost />
-    //       <AddPost />
-    //     </div>
-    //
-    //     <div className="overflow-y-scroll scrollbar-hide">
-    //       <PostsList />
-    //     </div>
-    //   </div>
-    //
-    //   <div>Tutaj jakieś inne pierdoły</div>
-    // </div>
+import logoImg from "../assets/imgs/logo.svg";
 
-    <div className="p-4 flex flex-col w-full lg:flex-row max-h-screen">
-      <div className="flex flex-col justify-between gap-4">
-        <div className="space-y-4">
-          <h1>Logo</h1>
+import { Route, Routes, Link } from "react-router-dom";
+import UserContext from "../UserContext";
+
+const Layout = () => {
+  const ctx = useContext(UserContext);
+
+  const { token } = ctx.userData;
+
+  return (
+    <div className="p-4 flex flex-col w-full lg:flex-row min-h-screen max-h-screen">
+      <div className="flex flex-col justify-between">
+        <div className="flex items-center justify-between gap-4 lg:flex-col">
+          <img
+            src={logoImg}
+            className="w-32 lg:w-52 shadow-lg"
+            alt="Moon Logotype"
+          />
           <Nav />
         </div>
-
-        <UserInfo />
+        <div className="space-y-4 mt-4">
+          {!token && (
+            <div className="flex gap-4">
+              <Link to="/register">
+                <button className="btn btn-primary w-full">Register</button>
+              </Link>
+              <Link to="/login" className="grow">
+                <button className="btn btn-primary w-full">Login</button>
+              </Link>
+            </div>
+          )}
+          {token && <UserInfo />}
+        </div>
       </div>
 
-      <div className="divider m-0 lg:divider-horizontal"></div>
+      <div className="divider lg:divider-horizontal lg:order-last"></div>
 
-      <div className="grid grow flex-grow gap-4">
-        <AddPost />
-        <div className="divider m-0"></div>
-        <PostsList />
+      <div className="flex flex-col justify-between gap-4 lg:order-last">
+        <SearchPost />
       </div>
 
       <div className="divider lg:divider-horizontal"></div>
 
-      <div className="flex flex-col justify-between gap-4">
-        <SearchPost />
+      <div className="grid grow flex-grow gap-4">
+        <Routes>
+          <Route path="/" element={<PostsContainer />} />
+          <Route path="/usersettings" element={<UserCard />} />
+        </Routes>
       </div>
     </div>
   );

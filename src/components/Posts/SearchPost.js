@@ -2,7 +2,7 @@ import React from "react";
 
 const SearchPost = () => {
   return (
-    <div className="card w-full bg-base-300 p-4">
+    <div className="card w-full bg-base-300 p-4 shadow-lg">
       <div className="form-control">
         <div className="input-group">
           <input type="text" placeholder="Search…" className="input grow" />

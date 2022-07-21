@@ -1,12 +1,12 @@
 import React from "react";
-import ProfileCard from "../components/ProfileCard";
+import UserCard from "../components/user/UserCard";
 import PostLists from "../components/Posts/PostsList";
 import AddPost from "../components/Posts/AddPost";
 
 const Dashboard = () => {
   return (
     <div>
-      <ProfileCard />
+      <UserCard />
       <PostLists />
       <AddPost />
     </div>

@@ -1,33 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 
 import Post from "./Post";
+import UserContext from "../../UserContext";
 
 const PostLists = () => {
-  const [posts, setPosts] = useState([]);
+  const ctx = useContext(UserContext);
 
-  useEffect(() => {
-    console.log("useEffect");
+  const { posts } = ctx;
 
-    (async () => {
-      const response = await fetch("http://192.168.0.125:8000/api/posts");
-
-      const data = await response.json();
-
-      setPosts(data);
-    })();
-  }, []);
-
-  // const postsToDisplay = posts.map((post) => (
-  //   <Post post={post} key={post.id} />
-  // ));
+  const postsToDisplay = posts.map((post) => (
+    <Post post={post} key={post.id} id={post.id} />
+  ));
 
   return (
-    <div className="overflow-y-scroll scrollbar-hide">
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-    </div>
+    <div className="overflow-y-scroll scrollbar-hide">{postsToDisplay}</div>
   );
 };
 

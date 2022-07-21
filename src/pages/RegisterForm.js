@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import loginImg from "../assets/imgs/login.svg";
+import { Navigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(true);
 
   const registerFormHandler = async (e) => {
     e.preventDefault();
 
     try {
-      const resp = await fetch("http://192.168.0.125:8000/api/register", {
+      const resp = await fetch(`http://unuel.eu:8000/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,10 +27,16 @@ const RegisterForm = () => {
         }),
       });
 
+      if (resp.ok) {
+        setError(!error);
+      }
+
       const data = await resp.json();
 
       console.log(data);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   return (
@@ -92,6 +100,7 @@ const RegisterForm = () => {
           </div>
         </div>
       </div>
+      {!error && <Navigate to="/dashboard" />}
     </form>
   );
 };
