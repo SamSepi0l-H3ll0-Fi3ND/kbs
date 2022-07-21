@@ -21,8 +21,6 @@ import PostComment from "./PostComment";
 // };
 
 const Post = ({ post }) => {
-  console.log(post.comments);
-
   return (
     <div className="card card-compact w-full shadow-lg my-4 bg-base-300">
       <div className="flex justify-between items-center p-4">
