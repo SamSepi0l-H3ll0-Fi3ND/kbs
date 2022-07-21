@@ -9,7 +9,7 @@ const PostLists = () => {
   const { posts } = ctx;
 
   const postsToDisplay = posts.map((post) => (
-    <Post post={post} key={post.id} id={post.id} />
+    <Post post={post} key={post.id} />
   ));
 
   return (

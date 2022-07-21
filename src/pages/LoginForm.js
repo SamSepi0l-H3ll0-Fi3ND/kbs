@@ -32,7 +32,9 @@ const LoginForm = () => {
       const data = await resp.json();
 
       ctx.setUserData(data);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

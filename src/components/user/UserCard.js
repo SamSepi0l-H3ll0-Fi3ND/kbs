@@ -1,32 +1,37 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
+
+import UserInfoBig from "./UserInfoBig";
+import EditUserInfo from "./EditUserInfo";
 import UserContext from "../../UserContext";
-import Tag from "../../ui/Tag";
-import API from "../../env";
+
+import loginImg from "../../assets/imgs/userLogin.svg";
 
 const UserCard = () => {
   const ctx = useContext(UserContext);
 
-  const { avatar_url, name, description, tags } = ctx.userData.user;
+  const { token } = ctx.userData;
 
-  return (
-    <div className="card bg-base-300">
-      <div className="card-body items-center text-center p-4">
-        <div className="avatar online">
-          <div className="w-24 rounded-full">
-            <img src={`${API}${avatar_url}`} alt="User avatar" />
-          </div>
-        </div>
-        <h2 className="card-title">{name ? name : "Username"}</h2>
-        <p>{description ? description : "Username"}</p>
-        <div className="flex justify-start w-full">
-          {tags ? tags.map((tag) => <Tag name={tag} />) : null}
-        </div>
-        {/*<div className="btn-group mt-6">*/}
-        {/*  <button className="btn btn-accent btn-outline">Follow</button>*/}
-        {/*  <button className="btn btn-accent btn-outline">...</button>*/}
-        {/*</div>*/}
+  let data;
+  let classes = token
+    ? "overflow-y-scroll scrollbar-hide"
+    : "overflow-y-scroll scrollbar-hide flex items-center";
+
+  if (!token) {
+    data = (
+      <div className="w-1/2 space-y-4 mx-auto">
+        <h1 className="text-2xl">U had to login first!</h1>
+        <img src={loginImg} alt="" />
       </div>
-    </div>
-  );
+    );
+  } else {
+    data = (
+      <div className="space-y-4">
+        <UserInfoBig />
+        <EditUserInfo />
+      </div>
+    );
+  }
+
+  return <div className={classes}>{data}</div>;
 };
 export default UserCard;

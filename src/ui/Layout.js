@@ -54,7 +54,7 @@ const Layout = () => {
 
       <div className="divider lg:divider-horizontal"></div>
 
-      <div className="grid grow flex-grow gap-4">
+      <div className="grid grow gap-4">
         <Routes>
           <Route path="/" element={<PostsContainer />} />
           <Route path="/usersettings" element={<UserCard />} />

@@ -2,25 +2,21 @@ import React from "react";
 import Tag from "../../ui/Tag";
 import PostComment from "./PostComment";
 
-// const post = {
-//   id: 0,
-//   body: "Lorem ipsum...",
-//   created_at: "2022-07-14T12:00:00.000000Z",
-//   updated_at: "2022-07-14T12:00:00.000000Z",
-//   user: {
-//     id: 0,
-//     username: "unuel",
-//     name: "Janusz Gajda",
-//     email: "user@example.com",
-//     description: "Hello everyone! Welcome to my profile",
-//     avatar_url: "http://example.com",
-//     email_verified_at: "2022-07-14T12:00:00.000000Z",
-//     created_at: "2022-07-14T12:00:00.000000Z",
-//     updated_at: "2022-07-14T12:00:00.000000Z",
-//   },
-// };
-
 const Post = ({ post }) => {
+  const posts = post.tags.map((tag, index) => <Tag name={tag} key={index} />);
+
+  const comments = post.comments.map((comment) => (
+    <PostComment id={comment.id} key={comment.id} comment={comment} />
+  ));
+
+  const displayComments =
+    comments.length > 0 ? (
+      <div>
+        <div className="divider p-4 m-0">Comments</div>
+        <div className="flex flex-col items-start p-4">{comments}</div>
+      </div>
+    ) : null;
+
   return (
     <div className="card card-compact w-full shadow-lg my-4 bg-base-300">
       <div className="flex justify-between items-center p-4">
@@ -41,20 +37,11 @@ const Post = ({ post }) => {
           className="w-full"
         />
       </figure>
-      <div className="flex justify-start p-4">
-        {post.tags.map((tag, index) => (
-          <Tag name={tag} key={index} />
-        ))}
-      </div>
+      <div className="flex justify-start p-4">{posts}</div>
       <div className="card-body text-left">
         <p className="text-m">{post.body}</p>
       </div>
-      <div className="divider p-4 m-0">Comments</div>
-      <div className="flex flex-col items-start p-4">
-        {post.comments.map((comment) => (
-          <PostComment id={comment.id} key={comment.id} comment={comment} />
-        ))}
-      </div>
+      {displayComments}
     </div>
   );
 };

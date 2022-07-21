@@ -11,12 +11,12 @@ const UserContext = createContext({
 export const UserContextProvider = (props) => {
   const [userData, setUserData] = useState({
     user: {
-      id: 11,
+      id: 0,
       username: null,
       name: null,
       email: null,
       description: null,
-      avatar_url: "/avatars/default.png",
+      avatar_url: null,
       created_at: null,
       updated_at: null,
     },
@@ -26,8 +26,6 @@ export const UserContextProvider = (props) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect");
-
     (async () => {
       const response = await fetch(`${API}/api/posts`);
       const data = await response.json();
