@@ -1,6 +1,8 @@
 import React from "react";
 import Tag from "../../ui/Tag";
 import PostComment from "./PostComment";
+import AddComment from "./AddComment";
+import API from "../../env";
 
 const Post = ({ post }) => {
   const posts = post.tags.map((tag, index) => <Tag name={tag} key={index} />);
@@ -26,7 +28,7 @@ const Post = ({ post }) => {
         </div>
         <div className="avatar w-16">
           <div className=" mask mask-squircle">
-            <img src="https://placeimg.com/192/192/people" alt="" />
+            <img src={`${API}${post.user.avatar_url}`} alt="User Avatar" />
           </div>
         </div>
       </div>
@@ -42,6 +44,7 @@ const Post = ({ post }) => {
         <p className="text-m">{post.body}</p>
       </div>
       {displayComments}
+      <AddComment id={post.id} />
     </div>
   );
 };

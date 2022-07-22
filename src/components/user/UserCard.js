@@ -11,11 +11,11 @@ const UserCard = () => {
 
   const { token } = ctx.userData;
 
-  let data;
   let classes = token
     ? "overflow-y-scroll scrollbar-hide"
     : "overflow-y-scroll scrollbar-hide flex items-center";
 
+  let data;
   if (!token) {
     data = (
       <div className="w-1/2 space-y-4 mx-auto">

@@ -1,31 +1,63 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import API from "../../env";
+import UserContext from "../../UserContext";
 
-const AddComment = () => {
+const AddComment = ({ id }) => {
+  const ctx = useContext(UserContext);
+
+  const [commentText, setCommentText] = useState("");
+
+  const addCommentHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const resp = await fetch(`${API}/api/posts/${id}/comments/add`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${ctx.userData.token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          postId: id,
+          body: commentText,
+        }),
+      });
+
+      const data = await resp.json();
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
-    <div className="form-control">
-      <div className="input-group">
-        <input
-          type="text"
-          placeholder="Search…"
-          className="input input-bordered"
-        />
-        <button className="btn btn-square">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </button>
-      </div>
+    <div className="form-control p-4">
+      <form onSubmit={addCommentHandler}>
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Add comment…"
+            className="input input-bordered w-full"
+            onChange={(e) => setCommentText(e.target.value)}
+          />
+          <button type="submit" className="btn btn-square">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              className="w-4 h-4 mr-2 stroke-current"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

@@ -14,9 +14,13 @@ import logoImg from "../assets/imgs/logo.svg";
 
 import { Route, Routes, Link } from "react-router-dom";
 import UserContext from "../UserContext";
+import Site404 from "../pages/Site404";
+import UserPosts from "../components/Posts/UserPosts";
 
 const Layout = () => {
   const ctx = useContext(UserContext);
+
+  console.log(ctx);
 
   const { token } = ctx.userData;
 
@@ -56,8 +60,11 @@ const Layout = () => {
 
       <div className="grid grow gap-4">
         <Routes>
+          <Route path="*" element={<Site404 />} />
+
           <Route path="/" element={<PostsContainer />} />
           <Route path="/usersettings" element={<UserCard />} />
+          <Route path="/myposts" element={<UserPosts />} />
         </Routes>
       </div>
     </div>

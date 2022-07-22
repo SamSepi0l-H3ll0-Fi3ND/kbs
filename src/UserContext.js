@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useReducer } from "react";
 import API from "./env";
 
 const UserContext = createContext({
@@ -31,7 +31,6 @@ export const UserContextProvider = (props) => {
       const data = await response.json();
 
       setPosts(data);
-      console.log(data);
     })();
   }, []);
 

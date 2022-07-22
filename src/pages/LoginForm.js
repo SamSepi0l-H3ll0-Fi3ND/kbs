@@ -5,6 +5,8 @@ import loginImg from "../assets/imgs/login.svg";
 import UserContext from "../UserContext";
 import API from "../env";
 
+import useHttp from "../hooks/use-http";
+
 const LoginForm = () => {
   const ctx = useContext(UserContext);
 
@@ -13,11 +15,14 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { isLoading, error, sendRequest: sendLoginRequest } = useHttp();
+
   const loginFormHandler = async (e) => {
     e.preventDefault();
 
-    try {
-      const resp = await fetch(`${API}/api/login`, {
+    const data = async () => {
+      const xd = await sendLoginRequest({
+        url: "/api/login",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,13 +33,28 @@ const LoginForm = () => {
           password: password,
         }),
       });
+    };
 
-      const data = await resp.json();
-
-      ctx.setUserData(data);
-    } catch (e) {
-      console.log(e);
-    }
+    console.log(sendLoginRequest);
+    // try {
+    //   const resp = await fetch(`${API}/api/login`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Accept: "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       email: email,
+    //       password: password,
+    //     }),
+    //   });
+    //
+    //   const data = await resp.json();
+    //
+    //   ctx.setUserData(data);
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
 
   return (
