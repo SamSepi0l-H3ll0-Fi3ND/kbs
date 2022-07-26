@@ -28,14 +28,16 @@ const UserPosts = () => {
   }
 
   useEffect(() => {
-    (async () => {
-      const response = await fetch(
-        `${API}/api/posts/user/${ctx.userData.user.id}`
-      );
-      const data = await response.json();
+    if (token) {
+      (async () => {
+        const response = await fetch(
+          `${API}/api/posts/user/${ctx.userData.user.id}`
+        );
+        const data = await response.json();
 
-      setUserPosts(data);
-    })();
+        setUserPosts(data);
+      })();
+    }
   }, []);
 
   return <div className={classes}>{data}</div>;

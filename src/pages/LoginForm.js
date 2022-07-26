@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 
 import loginImg from "../assets/imgs/login.svg";
 import UserContext from "../UserContext";
-import API from "../env";
 
 import useHttp from "../hooks/use-http";
 
@@ -20,41 +19,21 @@ const LoginForm = () => {
   const loginFormHandler = async (e) => {
     e.preventDefault();
 
-    const data = async () => {
-      const xd = await sendLoginRequest({
+    await sendLoginRequest(
+      {
         url: "/api/login",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({
+        body: {
           email: email,
           password: password,
-        }),
-      });
-    };
-
-    console.log(sendLoginRequest);
-    // try {
-    //   const resp = await fetch(`${API}/api/login`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Accept: "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       email: email,
-    //       password: password,
-    //     }),
-    //   });
-    //
-    //   const data = await resp.json();
-    //
-    //   ctx.setUserData(data);
-    // } catch (e) {
-    //   console.log(e);
-    // }
+        },
+      },
+      ctx.setUserData
+    );
   };
 
   return (
