@@ -1,26 +1,21 @@
 import React, { useContext } from "react";
+import { Route, Routes, Link } from "react-router-dom";
+
+import UserContext from "../UserContext";
+
 import UserCard from "../components/user/UserCard";
 import Nav from "../components/Nav";
 import UserInfo from "../components/user/UserInfo";
 import PostsContainer from "../components/Posts/PostsContainer";
-import AddPost from "../components/Posts/AddPost";
-import PostsList from "../components/Posts/PostsList";
 import SearchPost from "../components/Posts/SearchPost";
-import Post from "../components/Posts/Post";
-
-import postImg from "../assets/imgs/posts.svg";
+import UserPosts from "../components/Posts/UserPosts";
 
 import logoImg from "../assets/imgs/logo.svg";
 
-import { Route, Routes, Link } from "react-router-dom";
-import UserContext from "../UserContext";
 import Site404 from "./Site404";
-import UserPosts from "../components/Posts/UserPosts";
 
 const Dashboard = () => {
   const ctx = useContext(UserContext);
-
-  console.log(ctx);
 
   const { token } = ctx.userData;
 

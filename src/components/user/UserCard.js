@@ -25,7 +25,7 @@ const UserCard = () => {
     );
   } else {
     data = (
-      <div className="space-y-4">
+      <div className="space-y-4 mb-16 lg:mb-0">
         <UserInfoBig />
         <EditUserInfo />
       </div>

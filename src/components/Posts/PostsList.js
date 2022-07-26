@@ -8,8 +8,8 @@ const PostLists = () => {
 
   const { posts } = ctx;
 
-  const postsToDisplay = posts.map((post) => (
-    <Post post={post} key={post.id} />
+  const postsToDisplay = posts.map((post, index) => (
+    <Post post={post} key={post.id} index={index} />
   ));
 
   return (

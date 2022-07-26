@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useReducer } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import API from "./env";
 
 const UserContext = createContext({

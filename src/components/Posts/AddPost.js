@@ -1,11 +1,25 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../../UserContext";
 import API from "../../env";
+import Checkbox from "../../ui/Checkbox";
 
 const AddPost = () => {
   const ctx = useContext(UserContext);
 
   const [postInput, setPostInput] = useState("");
+  const [tags, setTags] = useState([]);
+
+  const addTagHandler = (e) => {
+    const newTags = [...tags];
+
+    if (newTags.includes(e.target.value)) {
+      const xd = newTags.filter((t) => t !== e.target.value);
+      setTags(xd);
+    } else {
+      newTags.push(e.target.value);
+      setTags(newTags);
+    }
+  };
 
   const addPostHandler = async (e) => {
     e.preventDefault();
@@ -19,11 +33,16 @@ const AddPost = () => {
       },
       body: JSON.stringify({
         body: postInput,
-        tags: [],
+        tags,
       }),
     });
 
-    console.log(resp);
+    const newPost = await resp.json();
+
+    ctx.setPosts((prevPosts) => [newPost, ...prevPosts]);
+
+    setPostInput("");
+    setTags([]);
   };
 
   return (
@@ -36,6 +55,7 @@ const AddPost = () => {
               className="textarea w-full"
               style={{ resize: "none" }}
               onChange={(e) => setPostInput(e.target.value)}
+              value={postInput}
             />
             <button className="btn min-h-16 btn-square">
               <svg
@@ -53,6 +73,12 @@ const AddPost = () => {
               </svg>
             </button>
           </div>
+        </div>
+        <div className="form-control flex flex-row gap-4">
+          <Checkbox text="#Sport" addTagHandler={addTagHandler} />
+          <Checkbox text="#Music" addTagHandler={addTagHandler} />
+          <Checkbox text="#Coś" addTagHandler={addTagHandler} />
+          <Checkbox text="#Kowal" addTagHandler={addTagHandler} />
         </div>
       </div>
     </form>

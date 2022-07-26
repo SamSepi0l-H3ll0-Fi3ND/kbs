@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import API from "../../env";
 import UserContext from "../../UserContext";
 
-const AddComment = ({ id }) => {
+const AddComment = ({ id, postIndex }) => {
   const ctx = useContext(UserContext);
 
   const [commentText, setCommentText] = useState("");
@@ -24,8 +24,13 @@ const AddComment = ({ id }) => {
         }),
       });
 
-      const data = await resp.json();
-      console.log(data);
+      const newComment = await resp.json();
+      const updatedComments = [...ctx.posts];
+      updatedComments.splice(postIndex, 1, newComment);
+
+      ctx.setPosts(updatedComments);
+
+      setCommentText("");
     } catch (e) {
       console.log(e);
     }
@@ -40,6 +45,7 @@ const AddComment = ({ id }) => {
             placeholder="Add comment…"
             className="input input-bordered w-full"
             onChange={(e) => setCommentText(e.target.value)}
+            value={commentText}
           />
           <button type="submit" className="btn btn-square">
             <svg
