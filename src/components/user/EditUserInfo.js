@@ -5,10 +5,9 @@ import UserContext from "../../UserContext";
 
 const EditUserInfo = () => {
   const ctx = useContext(UserContext);
-
   // const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState([1, 2, 3]);
 
   const onSubmitHandler = async () => {
     try {
@@ -21,16 +20,21 @@ const EditUserInfo = () => {
         },
         body: JSON.stringify({
           description,
+          tags: tags,
         }),
       });
 
       const data = await resp.json();
 
-      ctx.setUserData({ ...ctx.userData, user: data });
+      const userData = { ...ctx.userData };
+      userData.user.tags = data.tags;
+      userData.user.description = data.description;
+
+      ctx.setUserData(userData);
 
       setDescription("");
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

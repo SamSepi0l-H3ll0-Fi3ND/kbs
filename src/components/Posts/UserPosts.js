@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 import userContext from "../../UserContext";
 import noPostsImg from "../../assets/imgs/noPosts.png";
@@ -6,7 +6,6 @@ import API from "../../env";
 import Post from "./Post";
 
 const UserPosts = () => {
-  const [userPosts, setUserPosts] = useState([]);
   const ctx = useContext(userContext);
 
   const { token } = ctx.userData;
@@ -15,17 +14,20 @@ const UserPosts = () => {
     ? "overflow-y-scroll scrollbar-hide"
     : "overflow-y-scroll scrollbar-hide flex items-center";
 
-  let data;
-  if (!token) {
-    data = (
-      <div className="w-1/2 space-y-4 mx-auto">
-        <h1 className="text-2xl">U had to login first to see Your posts!</h1>
-        <img src={noPostsImg} alt="" />
-      </div>
-    );
-  } else {
-    data = userPosts.map((post) => <Post post={post} key={post.id} />);
-  }
+  const loadPosts = () => {
+    if (!token) {
+      return (
+        <div className="w-1/2 space-y-4 mx-auto">
+          <h1 className="text-2xl">U had to login first to see Your posts!</h1>
+          <img src={noPostsImg} alt="" />
+        </div>
+      );
+    } else {
+      return ctx.userPosts.map((post) => (
+        <Post post={post} key={post.id} userPost />
+      ));
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -35,12 +37,12 @@ const UserPosts = () => {
         );
         const data = await response.json();
 
-        setUserPosts(data);
+        ctx.setUserPosts(data);
       })();
     }
-  }, []);
+  }, [token]);
 
-  return <div className={classes}>{data}</div>;
+  return <div className={classes}>{loadPosts()}</div>;
 };
 
 export default UserPosts;

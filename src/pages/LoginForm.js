@@ -35,7 +35,6 @@ const LoginForm = () => {
       const data = await resp.json();
       ctx.setUserData(data);
       setUserData(data);
-      console.log(data);
       await cookies.set("token", data.token, { path: "/" });
 
       if (!resp.ok) {

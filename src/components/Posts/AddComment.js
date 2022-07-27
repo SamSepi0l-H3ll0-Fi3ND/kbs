@@ -32,7 +32,7 @@ const AddComment = ({ id, postIndex }) => {
 
       setCommentText("");
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

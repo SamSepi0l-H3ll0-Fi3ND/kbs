@@ -21,7 +21,9 @@ const UserInfoBig = () => {
         <p>{description ? description : "Description"}</p>
 
         <div className="flex justify-start w-full">
-          {tags ? tags.map((tag) => <Tag name={tag} />) : null}
+          {tags
+            ? tags.map((tag, index) => <Tag name={tag} key={index} />)
+            : null}
         </div>
         {/*<div className="btn-group mt-6">*/}
         {/*  <button className="btn btn-accent btn-outline">Follow</button>*/}

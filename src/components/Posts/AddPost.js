@@ -47,7 +47,6 @@ const AddPost = () => {
     ctx.setPosts((prevPosts) => [newPost, ...prevPosts]);
 
     setPostInput("");
-    setTags([]);
   };
 
   return (

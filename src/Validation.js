@@ -1,6 +1,5 @@
 const Valid = (e) => {
   let input = document.querySelector(`#${[e.target.id]}`);
-  console.log();
   if (
     e.target.id === "username" ||
     e.target.id === "name" ||

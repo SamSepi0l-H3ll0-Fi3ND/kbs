@@ -27,7 +27,6 @@ const RegisterForm = () => {
       userInfo.email &&
       userInfo.passw > 1
     ) {
-      console.log("kkk");
       try {
         const resp = await fetch(`${API}/api/register`, {
           method: "POST",

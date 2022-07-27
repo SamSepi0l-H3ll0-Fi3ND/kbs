@@ -7,6 +7,8 @@ const UserContext = createContext({
   setUserData: () => {},
   posts: [],
   setPosts: () => {},
+  userPosts: [],
+  setUserPosts: () => {},
 });
 
 export const UserContextProvider = (props) => {
@@ -22,11 +24,13 @@ export const UserContextProvider = (props) => {
       avatar_url: null,
       created_at: null,
       updated_at: null,
+      tags: [],
     },
     token: null,
   });
 
   const [posts, setPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -46,11 +50,10 @@ export const UserContextProvider = (props) => {
               Authorization: `Bearer ${cookies.get("token")}`,
             },
           }).then((data) => data.json());
-
           const ussr = { user: response, token: cookies.get("token") };
           setUserData(ussr);
         } catch (e) {
-          console.log("tak ma działać luz");
+          console.error(e);
         }
       }
     })();
@@ -63,6 +66,8 @@ export const UserContextProvider = (props) => {
         setUserData,
         posts,
         setPosts,
+        userPosts,
+        setUserPosts,
       }}
     >
       {props.children}

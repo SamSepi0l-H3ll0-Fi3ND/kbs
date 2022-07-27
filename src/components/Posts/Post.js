@@ -5,7 +5,7 @@ import AddComment from "./AddComment";
 import API from "../../env";
 import UserContext from "../../UserContext";
 
-const Post = ({ post, index }) => {
+const Post = ({ post, index, userPost }) => {
   const ctx = useContext(UserContext);
 
   const posts = post.tags.map((tag, index) => <Tag name={tag} key={index} />);
@@ -34,20 +34,52 @@ const Post = ({ post, index }) => {
       }),
     });
     const { comments } = await resp.json();
-    console.log(comments);
 
     const postUpdated = [...ctx.posts];
     postUpdated[index].comments = comments;
 
-    console.log(postUpdated);
-
     ctx.setPosts(postUpdated);
+  };
+
+  const deletePostHandler = async (postId) => {
+    await fetch(`${API}/api/posts/${postId}/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${ctx.userData.token}`,
+      },
+      body: JSON.stringify({
+        postId,
+      }),
+    });
+
+    const userPosts = [...ctx.userPosts].filter((post) => post.id !== postId);
+    ctx.setUserPosts(userPosts);
   };
 
   return (
     <div className="card card-compact w-full shadow-lg my-4 bg-base-300">
       <div className="flex justify-between items-center p-4">
         <div className="flex flex-col items-start">
+          <div className="dropdown mb-2">
+            <label tabIndex="0" className="btn-sm btn-primary rounded">
+              •••
+            </label>
+            <ul
+              tabIndex="0"
+              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a>Zgłoś</a>
+              </li>
+              {userPost && (
+                <li>
+                  <a onClick={() => deletePostHandler(post.id)}>Usuń</a>
+                </li>
+              )}
+            </ul>
+          </div>
           <p>{post.user.name}</p>
           <p className="text-sm">{post.created_at.slice(0, 10)}</p>
         </div>
