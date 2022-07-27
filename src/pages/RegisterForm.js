@@ -1,34 +1,53 @@
 import React, { useState } from "react";
 import loginImg from "../assets/imgs/login.svg";
-import { Navigate } from "react-router-dom";
-import useHttp from "../hooks/use-http";
+import Valid from "../Validation";
+import API from "../env";
 
 const RegisterForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [error, setError] = useState(true);
-
-  const { isLoading, error, sendRequest: sendRegisterRequest } = useHttp();
+  const [userInfo, setUserInfo] = useState({
+    username: false,
+    lastname: false,
+    name: false,
+    email: false,
+    passw: 1,
+  });
 
   const registerFormHandler = async (e) => {
     e.preventDefault();
+    if (
+      userInfo.username &&
+      userInfo.name &&
+      userInfo.lastname &&
+      userInfo.email &&
+      userInfo.passw > 1
+    ) {
+      console.log("kkk");
+      try {
+        const resp = await fetch(`${API}/api/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            name: name + " " + lastName,
+            email,
+            password,
+          }),
+        });
 
-    await sendRegisterRequest({
-      url: "/api/register",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: {
-        username,
-        name: fullName,
-        email,
-        password,
-      },
-    });
+        const data = await resp.json();
+
+        console.log(data);
+      } catch (e) {}
+    }
   };
 
   return (
@@ -44,21 +63,44 @@ const RegisterForm = () => {
                   <span className="label-text">Username</span>
                 </label>
                 <input
+                  id="username"
                   type="text"
                   placeholder="username"
                   className="input input-bordered"
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    setUserInfo({ ...userInfo, username: Valid(e) });
+                  }}
                 />
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Full name</span>
+                  <span className="label-text">Name</span>
                 </label>
                 <input
+                  id="name"
                   type="text"
-                  placeholder="full name"
+                  placeholder="name"
                   className="input input-bordered"
-                  onChange={(e) => setFullName(e.target.value)}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                    setUserInfo({ ...userInfo, name: Valid(e) });
+                  }}
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Last name</span>
+                </label>
+                <input
+                  id="lastname"
+                  type="text"
+                  placeholder="last name"
+                  className="input input-bordered"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setUserInfo({ ...userInfo, lastname: Valid(e) });
+                  }}
                 />
               </div>
               <div className="form-control">
@@ -66,10 +108,14 @@ const RegisterForm = () => {
                   <span className="label-text">Email</span>
                 </label>
                 <input
+                  id="email"
                   type="text"
                   placeholder="email"
                   className="input input-bordered"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setUserInfo({ ...userInfo, email: Valid(e) });
+                  }}
                 />
               </div>
               <div className="form-control">
@@ -77,11 +123,16 @@ const RegisterForm = () => {
                   <span className="label-text">Password</span>
                 </label>
                 <input
-                  type="text"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="password"
                   className="input input-bordered"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setUserInfo({ ...userInfo, passw: Valid(e) });
+                  }}
                 />
+                <i onClick={() => setShowPassword(!showPassword)}>Show</i>
               </div>
               <div className="form-control mt-6">
                 <button type="submit" className="btn btn-primary">
@@ -92,7 +143,6 @@ const RegisterForm = () => {
           </div>
         </div>
       </div>
-      {error && <Navigate to="/dashboard" />}
     </form>
   );
 };

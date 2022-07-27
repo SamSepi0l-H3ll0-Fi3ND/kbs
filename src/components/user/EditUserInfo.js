@@ -66,7 +66,6 @@ const EditUserInfo = () => {
           </label>
           <div>
             <div className="badge badge-outline mt-2">
-              {" "}
               <input
                 type="text"
                 placeholder="Change first tag here"
@@ -74,7 +73,6 @@ const EditUserInfo = () => {
               />
             </div>
             <div className="badge badge-outline mt-4">
-              {" "}
               <input
                 type="text"
                 placeholder="Change second tag here"
@@ -82,7 +80,6 @@ const EditUserInfo = () => {
               />
             </div>
             <div className="badge  badge-outline mt-4">
-              {" "}
               <input
                 type="text"
                 placeholder="Change third tag here"
@@ -90,7 +87,6 @@ const EditUserInfo = () => {
               />
             </div>
             <div className="badge  badge-outline mt-4">
-              {" "}
               <input
                 type="text"
                 placeholder="Change fourth tag here"

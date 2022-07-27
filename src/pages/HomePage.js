@@ -1,5 +1,5 @@
 import React from "react";
-
+import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 
 import homeImg from "../assets/imgs/home.svg";
@@ -9,6 +9,8 @@ import homeImg3 from "../assets/imgs/home3.svg";
 const imgs = [homeImg, homeImg2, homeImg3];
 
 const HomePage = () => {
+  const cookies = new Cookies();
+
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row">
@@ -28,7 +30,7 @@ const HomePage = () => {
             <Link to="/register">
               <button className="btn btn-primary">Register</button>
             </Link>
-            <Link to="/login">
+            <Link to={cookies.get("token") ? "/dashboard" : "/login"}>
               <button className="btn btn-primary">Login</button>
             </Link>
           </div>

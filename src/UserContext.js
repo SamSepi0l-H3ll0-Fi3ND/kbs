@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import API from "./env";
+import Cookies from "universal-cookie";
 
 const UserContext = createContext({
   userData: {},
@@ -9,6 +10,8 @@ const UserContext = createContext({
 });
 
 export const UserContextProvider = (props) => {
+  const cookies = new Cookies();
+
   const [userData, setUserData] = useState({
     user: {
       id: 0,
@@ -31,6 +34,25 @@ export const UserContextProvider = (props) => {
       const data = await response.json();
 
       setPosts(data);
+    })();
+
+    (async () => {
+      if (cookies.get("token")) {
+        try {
+          const response = await fetch(`${API}/api/user`, {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${cookies.get("token")}`,
+            },
+          }).then((data) => data.json());
+
+          const ussr = { user: response, token: cookies.get("token") };
+          setUserData(ussr);
+        } catch (e) {
+          console.log("tak ma działać luz");
+        }
+      }
     })();
   }, []);
 

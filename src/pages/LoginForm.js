@@ -1,39 +1,50 @@
 import React, { useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 import loginImg from "../assets/imgs/login.svg";
 import UserContext from "../UserContext";
-
-import useHttp from "../hooks/use-http";
+import API from "../env";
 
 const LoginForm = () => {
   const ctx = useContext(UserContext);
 
-  const { token } = ctx.userData;
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const { isLoading, error, sendRequest: sendLoginRequest } = useHttp();
+  const [isValid, setIsValid] = useState(false);
+  const [userData, setUserData] = useState();
 
   const loginFormHandler = async (e) => {
     e.preventDefault();
 
-    await sendLoginRequest(
-      {
-        url: "/api/login",
+    const cookies = new Cookies();
+
+    try {
+      const resp = await fetch(`${API}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: {
+        body: JSON.stringify({
           email: email,
           password: password,
-        },
-      },
-      ctx.setUserData
-    );
+        }),
+      });
+      setIsValid(resp.ok);
+      const data = await resp.json();
+      ctx.setUserData(data);
+      setUserData(data);
+      console.log(data);
+      await cookies.set("token", data.token, { path: "/" });
+
+      if (!resp.ok) {
+        document.querySelector("#email").classList.add("notValid");
+        document.querySelector("#password").classList.add("notValid");
+      }
+    } catch (e) {
+      setIsValid(!isValid);
+    }
   };
 
   return (
@@ -49,6 +60,7 @@ const LoginForm = () => {
                   <span className="label-text">Email</span>
                 </label>
                 <input
+                  id="email"
                   type="text"
                   placeholder="email"
                   className="input input-bordered"
@@ -60,7 +72,8 @@ const LoginForm = () => {
                   <span className="label-text">Password</span>
                 </label>
                 <input
-                  type="text"
+                  id="password"
+                  type="password"
                   placeholder="password"
                   className="input input-bordered"
                   onChange={(e) => setPassword(e.target.value)}
@@ -83,7 +96,7 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
-      {token && <Navigate to="/dashboard" />}
+      {isValid ? <Navigate to="/dashboard" /> : undefined}
     </form>
   );
 };

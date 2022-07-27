@@ -1,10 +1,15 @@
 import React, { useContext, useState } from "react";
+import Cookies from "universal-cookie";
+
 import UserContext from "../../UserContext";
 import API from "../../env";
+
 import Checkbox from "../../ui/Checkbox";
 
 const AddPost = () => {
   const ctx = useContext(UserContext);
+
+  const cookies = new Cookies();
 
   const [postInput, setPostInput] = useState("");
   const [tags, setTags] = useState([]);
@@ -29,7 +34,7 @@ const AddPost = () => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${ctx.userData.token}`,
+        Authorization: `Bearer ${cookies.get("token")}`,
       },
       body: JSON.stringify({
         body: postInput,

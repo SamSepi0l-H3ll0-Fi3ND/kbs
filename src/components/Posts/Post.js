@@ -70,10 +70,11 @@ const Post = ({ post, index }) => {
       </div>
       {displayComments}
       {ctx.userData.token && <AddComment id={post.id} postIndex={index} />}
-
-      <button className="btn btn-primary" onClick={loadMoreCommentsHandler}>
-        Load more comments
-      </button>
+      {displayComments && (
+        <button className="btn btn-primary" onClick={loadMoreCommentsHandler}>
+          Load more comments
+        </button>
+      )}
     </div>
   );
 };
