@@ -9,7 +9,7 @@ const UserContext = createContext({
   setPosts: () => {},
   userPosts: [],
   setUserPosts: () => {},
-  theme: null,
+  theme: localStorage.theme,
   setTheme: () => {},
 });
 

@@ -14,7 +14,6 @@ import UserContext from "./UserContext";
 
 function App() {
   const ctx = useContext(UserContext);
-  console.log(ctx);
   const { theme } = ctx;
 
   return (
