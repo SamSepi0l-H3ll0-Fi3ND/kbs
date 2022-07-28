@@ -9,6 +9,8 @@ const UserContext = createContext({
   setPosts: () => {},
   userPosts: [],
   setUserPosts: () => {},
+  theme: null,
+  setTheme: () => {},
 });
 
 export const UserContextProvider = (props) => {
@@ -31,6 +33,7 @@ export const UserContextProvider = (props) => {
 
   const [posts, setPosts] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
+  const [theme, setTheme] = useState(localStorage.theme);
 
   useEffect(() => {
     (async () => {
@@ -51,7 +54,6 @@ export const UserContextProvider = (props) => {
             },
           }).then((data) => data.json());
 
-          console.log(response);
           const ussr = { user: response.data, token: cookies.get("token") };
           setUserData(ussr);
         } catch (e) {
@@ -70,6 +72,8 @@ export const UserContextProvider = (props) => {
         setPosts,
         userPosts,
         setUserPosts,
+        theme,
+        setTheme,
       }}
     >
       {props.children}

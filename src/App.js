@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
@@ -10,10 +10,15 @@ import HomePage from "./pages/HomePage";
 import Site404 from "./pages/Site404";
 
 import Dashboard from "./pages/Dashboard";
+import UserContext from "./UserContext";
 
 function App() {
+  const ctx = useContext(UserContext);
+  console.log(ctx);
+  const { theme } = ctx;
+
   return (
-    <div className="App">
+    <div className="App" data-theme={theme}>
       <Routes>
         <Route path="*" element={<Site404 />} />
         <Route path="/" element={<HomePage />} />

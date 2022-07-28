@@ -23,7 +23,7 @@ const Dashboard = () => {
         <div className="flex items-center justify-between gap-4 lg:flex-col">
           <img
             src={logoImg}
-            className="w-32 lg:w-52 shadow-lg"
+            className="w-32 lg:w-52 shadow-sm"
             alt="Moon Logotype"
           />
           <Nav />
