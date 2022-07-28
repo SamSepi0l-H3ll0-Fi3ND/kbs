@@ -78,7 +78,7 @@ const AddPost = () => {
             </button>
           </div>
         </div>
-        <div className="form-control flex flex-row gap-4">
+        <div className="form-control flex flex-row gap-2 flex-wrap">
           <Checkbox text="#Sport" addTagHandler={addTagHandler} />
           <Checkbox text="#Music" addTagHandler={addTagHandler} />
           <Checkbox text="#Coś" addTagHandler={addTagHandler} />

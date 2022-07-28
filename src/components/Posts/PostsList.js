@@ -13,7 +13,9 @@ const PostLists = () => {
   ));
 
   return (
-    <div className="overflow-y-scroll scrollbar-hide">{postsToDisplay}</div>
+    <div className="md:overflow-y-scroll scrollbar-hide md:overflow-hidden">
+      {postsToDisplay}
+    </div>
   );
 };
 

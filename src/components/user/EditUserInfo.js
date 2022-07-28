@@ -5,8 +5,7 @@ import UserContext from "../../UserContext";
 
 const EditUserInfo = () => {
   const ctx = useContext(UserContext);
-  // const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(ctx.userData.user.description);
   const [tags, setTags] = useState([1, 2, 3]);
 
   const onSubmitHandler = async () => {
@@ -42,18 +41,6 @@ const EditUserInfo = () => {
     <div className="card bg-base-300 shadow-lg">
       <div className="card-body flex items-center justify-center">
         <h2 className="card-title">Edit your profile!</h2>
-        {/*<div className="form-control w-full max-w-xs">*/}
-        {/*  <label className="label">*/}
-        {/*    <span className="label-text">Name</span>*/}
-        {/*  </label>*/}
-        {/*  <input*/}
-        {/*    type="text"*/}
-        {/*    placeholder="Change name here"*/}
-        {/*    className="input input-bordered w-full max-w-xs"*/}
-        {/*    onChange={(e) => setName(e.target.value)}*/}
-        {/*    value={name}*/}
-        {/*  />*/}
-        {/*</div>*/}
         <div className="form-control w-full max-w-xs">
           <label className="label">
             <span className="label-text">Description</span>
@@ -99,15 +86,18 @@ const EditUserInfo = () => {
             </div>
           </div>
         </div>
-        <div className="form-control w-full max-w-xs">
+        <div className="form-control w-full max-w-xs flex items-center">
           <label className="label">
             <span className="label-text">Avatar</span>
           </label>
-          <div className="indicator">
+          <div className="indicator w-52 lg:w-max">
             <span className="indicator-item indicator-center indicator-middle badge badge-primary">
               Upload avatar +
             </span>
-            <img src="https://placeimg.com/300/150/arch" />
+            <img
+              className="aspect-auto "
+              src="https://placeimg.com/300/150/arch"
+            />
           </div>
         </div>
         <div className="card-actions justify-center">

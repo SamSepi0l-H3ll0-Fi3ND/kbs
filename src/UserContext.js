@@ -50,7 +50,9 @@ export const UserContextProvider = (props) => {
               Authorization: `Bearer ${cookies.get("token")}`,
             },
           }).then((data) => data.json());
-          const ussr = { user: response, token: cookies.get("token") };
+
+          console.log(response);
+          const ussr = { user: response.data, token: cookies.get("token") };
           setUserData(ussr);
         } catch (e) {
           console.error(e);

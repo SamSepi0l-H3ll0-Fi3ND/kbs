@@ -11,8 +11,8 @@ const UserPosts = () => {
   const { token } = ctx.userData;
 
   let classes = token
-    ? "overflow-y-scroll scrollbar-hide"
-    : "overflow-y-scroll scrollbar-hide flex items-center";
+    ? "md:overflow-y-scroll scrollbar-hide md:overflow-hidden"
+    : "md:overflow-y-scroll scrollbar-hide flex items-center md:overflow-hidden";
 
   const loadPosts = () => {
     if (!token) {

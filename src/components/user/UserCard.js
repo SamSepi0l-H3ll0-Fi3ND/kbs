@@ -12,8 +12,8 @@ const UserCard = () => {
   const { token } = ctx.userData;
 
   let classes = token
-    ? "overflow-y-scroll scrollbar-hide"
-    : "overflow-y-scroll scrollbar-hide flex items-center";
+    ? "md:overflow-y-scroll scrollbar-hide md:overflow-hidden"
+    : "md:overflow-y-scroll scrollbar-hide flex items-center md:overflow-hidden";
 
   let data;
   if (!token) {

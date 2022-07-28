@@ -79,7 +79,7 @@ const Nav = () => {
   const { token } = ctx.userData;
   return (
     <>
-      <ul className="z-10 fixed bottom-0 left-0 justify-around menu w-full lg:menu menu-horizontal bg-base-300 md:justify-around lg:w-56 p-2 lg:rounded-box shadow-lg lg:static">
+      <ul className="z-10 fixed bottom-0 left-0 justify-around menu w-full lg:menu menu-horizontal bg-base-300 md:justify-around lg:w-56 p-2 lg:rounded-box shadow-lg lg:static lg:mt-2">
         <li>
           <Link to="">
             <svg

@@ -9,9 +9,7 @@ import UserInfo from "../components/user/UserInfo";
 import PostsContainer from "../components/Posts/PostsContainer";
 import SearchPost from "../components/Posts/SearchPost";
 import UserPosts from "../components/Posts/UserPosts";
-
 import logoImg from "../assets/imgs/logo.svg";
-
 import Site404 from "./Site404";
 
 const Dashboard = () => {
@@ -20,8 +18,8 @@ const Dashboard = () => {
   const { token } = ctx.userData;
 
   return (
-    <div className="p-4 flex flex-col w-full lg:flex-row min-h-screen max-h-screen">
-      <div className="flex flex-col justify-between">
+    <div className="p-8 flex flex-col min-w-min lg:flex-row min-h-screen max-h-screen">
+      <div className="flex justify-between lg:flex-col">
         <div className="flex items-center justify-between gap-4 lg:flex-col">
           <img
             src={logoImg}
@@ -30,7 +28,7 @@ const Dashboard = () => {
           />
           <Nav />
         </div>
-        <div className="space-y-4 mt-4">
+        <div>
           {!token && (
             <div className="flex gap-4">
               <Link to="/register">
