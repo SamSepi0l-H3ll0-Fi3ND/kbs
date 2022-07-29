@@ -2,11 +2,17 @@ import React, { useState, useContext } from "react";
 
 import API from "../../env";
 import UserContext from "../../UserContext";
+import TagInput from "../../ui/TagInput";
 
 const EditUserInfo = () => {
   const ctx = useContext(UserContext);
-  const [description, setDescription] = useState(ctx.userData.user.description);
-  const [tags, setTags] = useState([1, 2, 3]);
+
+  const { description: userDesc, tags: userTags } = ctx.userData.user;
+
+  const [description, setDescription] = useState(userDesc);
+  const [tags, setTags] = useState(
+    userTags.length === 0 ? ["", "", "", ""] : userTags
+  );
 
   const onSubmitHandler = async () => {
     try {
@@ -56,34 +62,15 @@ const EditUserInfo = () => {
             <span className="label-text">Tags</span>
           </label>
           <div>
-            <div className="badge badge-outline mt-2">
-              <input
-                type="text"
-                placeholder="Change first tag here"
-                className=" text-gray-100 badge-outline"
+            {tags.map((tag, index) => (
+              <TagInput
+                id={index}
+                key={index}
+                tagValue={tag}
+                tags={tags}
+                setTags={setTags}
               />
-            </div>
-            <div className="badge badge-outline mt-4">
-              <input
-                type="text"
-                placeholder="Change second tag here"
-                className=" text-gray-100  badge-outline"
-              />
-            </div>
-            <div className="badge  badge-outline mt-4">
-              <input
-                type="text"
-                placeholder="Change third tag here"
-                className=" text-gray-100 badge-outline"
-              />
-            </div>
-            <div className="badge  badge-outline mt-4">
-              <input
-                type="text"
-                placeholder="Change fourth tag here"
-                className=" text-gray-100 badge-outline"
-              />
-            </div>
+            ))}
           </div>
         </div>
         <div className="form-control w-full max-w-xs flex items-center">

@@ -18,7 +18,7 @@ const Dashboard = () => {
   const { token } = ctx.userData;
 
   return (
-    <div className="p-8 flex flex-col min-w-min lg:flex-row min-h-screen max-h-screen">
+    <div className="p-8 flex flex-col min-w-min lg:flex-row min-h-screen md:max-h-screen">
       <div className="flex justify-between lg:flex-col">
         <div className="flex items-center justify-between gap-4 lg:flex-col">
           <img

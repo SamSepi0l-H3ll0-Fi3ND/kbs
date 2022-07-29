@@ -59,7 +59,7 @@ const Post = ({ post, index, userPost }) => {
   };
 
   return (
-    <div className="card card-compact w-full shadow-lg my-4 bg-base-300">
+    <div className="card card-compact w-full shadow-lg mb-4 bg-base-300">
       <div className="flex justify-between items-center p-4">
         <div className="flex flex-col items-start">
           <div className="dropdown mb-2">

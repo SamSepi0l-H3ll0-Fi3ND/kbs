@@ -31,7 +31,9 @@ const UserInfo = () => {
           tabIndex="0"
           className="dropdown-content menu p-2 bg-base-100 rounded-box w-52 shadow-xl"
         >
-          <Switcher />
+          <li className="relative">
+            <Switcher />
+          </li>
           {token && (
             <li>
               <Link to="/login">

@@ -26,7 +26,7 @@ export const UserContextProvider = (props) => {
       avatar_url: null,
       created_at: null,
       updated_at: null,
-      tags: [],
+      tags: null,
     },
     token: null,
   });

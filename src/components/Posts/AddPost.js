@@ -51,7 +51,7 @@ const AddPost = () => {
 
   return (
     <form onSubmit={addPostHandler}>
-      <div className="card w-full bg-base-300 p-4 shadow-lg">
+      <div className="card w-full bg-base-300 p-4 mb-4 shadow-lg">
         <div className="form-control">
           <div className="input-group max-h-16">
             <textarea
