@@ -1,12 +1,30 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import API from "../../env";
+import UserContext from "../../UserContext";
 
 const SearchPost = () => {
+  const ctx = useContext(UserContext);
+  const [inputValue, setInputValue] = useState("");
+
+  const clickHandler = async () => {
+    const response = await fetch(`${API}/api/posts/tag/${inputValue}`);
+    const data = await response.json();
+
+    ctx.setPosts(data);
+  };
+
   return (
     <div className="card w-full bg-base-300 p-4 shadow-lg">
       <div className="form-control">
         <div className="input-group">
-          <input type="text" placeholder="Search…" className="input grow" />
-          <button className="btn btn-square">
+          <input
+            type="text"
+            placeholder="Search…"
+            className="input grow"
+            onChange={(e) => setInputValue(e.target.value)}
+            value={inputValue}
+          />
+          <button onClick={clickHandler} className="btn btn-square">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"

@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 const TagInput = ({ setTags, tagValue, id, tags }) => {
   const [tagInput, setTagInput] = useState(tagValue);
 
-  const newTags = [...tags];
-
   useEffect(() => {
+    const newTags = [...tags];
+
     const intervalId = setTimeout(() => {
       newTags[id] = tagInput;
       console.log(newTags);
@@ -13,7 +13,7 @@ const TagInput = ({ setTags, tagValue, id, tags }) => {
     }, 200);
 
     return () => clearTimeout(intervalId);
-  }, [tagInput]);
+  }, [tagInput, id]);
 
   const onChangeHandler = (e) => {
     setTagInput(e.target.value);

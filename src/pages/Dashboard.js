@@ -18,7 +18,7 @@ const Dashboard = () => {
   const { token } = ctx.userData;
 
   return (
-    <div className="p-8 flex flex-col min-w-min lg:flex-row min-h-screen md:max-h-screen">
+    <div className="p-6 flex flex-col min-w-min lg:flex-row min-h-screen md:max-h-screen">
       <div className="flex justify-between lg:flex-col">
         <div className="flex items-center justify-between gap-4 lg:flex-col">
           <img
@@ -51,10 +51,9 @@ const Dashboard = () => {
 
       <div className="divider lg:divider-horizontal p-2"></div>
 
-      <div className="grid grow gap-4">
+      <div className="grid grow gap-4 flex-1">
         <Routes>
           <Route path="*" element={<Site404 />} />
-
           <Route path="/" element={<PostsContainer />} />
           <Route path="/usersettings" element={<UserCard />} />
           <Route path="/myposts" element={<UserPosts />} />

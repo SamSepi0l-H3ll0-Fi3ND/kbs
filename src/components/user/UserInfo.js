@@ -13,23 +13,27 @@ const UserInfo = () => {
   const { avatar_url, name, username } = ctx.userData.user;
 
   return (
-    <div className="flex items-center space-x-3 bg-base-300 p-4 rounded-box w-40 shadow-lg md:w-40 lg:w-full">
+    <div className="flex items-center justify-center space-x-3 bg-base-300 p-2 rounded-box shadow-lg md:w-50 lg:w-full">
       <div className="flex avatar">
         <div className="mask mask-squircle w-12 h-12">
           <img src={`${API}${avatar_url}`} alt="User Avatar" />
         </div>
       </div>
       <div>
-        <div className="font-bold">{name}</div>
-        <div className="text-sm opacity-50 text-center">{username}</div>
+        <div className="font-bold xs:hidden lg:grid justify-items-center">
+          {name}
+        </div>
+        <div className="text-sm opacity-50 text-center xs:hidden lg:grid justify-items-center">
+          {username}
+        </div>
       </div>
-      <div className="dropdown dropdown-top dropdown-end">
-        <label tabIndex="0" className="btn btn-ghost m-1">
+      <div className="dropdown dropdown-end lg:dropdown-top dropdown-end">
+        <label tabIndex="0" className="btn btn-ghost m-1 w-8">
           ...
         </label>
         <ul
           tabIndex="0"
-          className="dropdown-content menu p-2 bg-base-100 rounded-box w-52 shadow-xl"
+          className="dropdown-content menu p-2 bg-base-100 rounded-box w-30 shadow-xl lg:w-52"
         >
           <li className="relative">
             <Switcher />
