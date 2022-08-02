@@ -4,17 +4,27 @@ const Friend = ({
   friendAvatar,
   friendName,
   friendEmail,
+  friendId,
+  userId,
   userEmail,
   setConnection,
 }) => {
   let connectionString;
 
   if (friendEmail && userEmail) {
-    connectionString = `${friendEmail
-      .replaceAll(".", "")
-      .replaceAll("@", "")}${userEmail
-      .replaceAll(".", "")
-      .replaceAll("@", "")}`;
+    if (userId > friendId) {
+      connectionString = `${friendEmail
+        .replaceAll(".", "")
+        .replaceAll("@", "")}${userEmail
+        .replaceAll(".", "")
+        .replaceAll("@", "")}`;
+    } else {
+      connectionString = `${userEmail
+        .replaceAll(".", "")
+        .replaceAll("@", "")}${friendEmail
+        .replaceAll(".", "")
+        .replaceAll("@", "")}`;
+    }
   }
 
   return (

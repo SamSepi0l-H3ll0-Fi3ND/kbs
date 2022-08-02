@@ -11,7 +11,7 @@ const Chat = () => {
 
   const ctx = useContext(UserContext);
 
-  const { name, email } = ctx.userData.user;
+  const { name, email, id } = ctx.userData.user;
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -23,6 +23,7 @@ const Chat = () => {
   let friendName = !isLoading ? friends[10].name : "Loading...";
   let friendAvatar = !isLoading ? friends[10].avatar_url : "";
   let friendEmail = !isLoading ? friends[10].email : null;
+  let friendId = !isLoading ? friends[10].id : null;
 
   return (
     <div>
@@ -30,6 +31,8 @@ const Chat = () => {
         friendName={friendName}
         friendAvatar={friendAvatar}
         friendEmail={friendEmail}
+        friendId={friendId}
+        userId={id}
         userEmail={email}
         setConnection={setConnection}
       />
