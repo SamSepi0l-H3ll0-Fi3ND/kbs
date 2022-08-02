@@ -40,7 +40,11 @@ const Chat = () => {
         Load messages
       </button>
       <form onSubmit={submitHandler}>
-        <input type="text" onChange={(e) => setInputValue(e.target.value)} />
+        <input
+          type="text"
+          onChange={(e) => setInputValue(e.target.value)}
+          value={inputValue}
+        />
       </form>
       <div>Wiadomości</div>
       {messages.map((mesTab, index) => (
