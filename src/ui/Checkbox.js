@@ -12,7 +12,7 @@ const Checkbox = ({ text, addTagHandler }) => {
         value={text}
         checked={checked}
         onClick={() => setChecked((c) => !c)}
-        onChange={addTagHandler}
+        onChange={(e) => addTagHandler(e, setChecked)}
       />
     </label>
   );

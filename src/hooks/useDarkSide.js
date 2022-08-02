@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import UserContext from "../UserContext";
+import UserContext from "../store/UserContext";
 
 export default function useDarkSide() {
   const ctx = useContext(UserContext);

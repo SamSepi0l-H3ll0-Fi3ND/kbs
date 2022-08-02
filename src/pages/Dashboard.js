@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 
-import UserContext from "../UserContext";
+import UserContext from "../store/UserContext";
 
 import UserCard from "../components/user/UserCard";
 import Nav from "../components/Nav";
@@ -11,6 +11,7 @@ import SearchPost from "../components/Posts/SearchPost";
 import UserPosts from "../components/Posts/UserPosts";
 import logoImg from "../assets/imgs/logo.svg";
 import Site404 from "./Site404";
+import Chat from "../components/Chat";
 
 const Dashboard = () => {
   const ctx = useContext(UserContext);
@@ -47,6 +48,7 @@ const Dashboard = () => {
 
       <div className="flex flex-col justify-between gap-4 lg:order-last">
         <SearchPost />
+        <Chat />
       </div>
 
       <div className="divider lg:divider-horizontal p-2"></div>

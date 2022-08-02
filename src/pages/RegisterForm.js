@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import loginImg from "../assets/imgs/login.svg";
-import Valid from "../Validation";
+import Valid from "../utils/Validation";
 import API from "../env";
 
 const RegisterForm = () => {

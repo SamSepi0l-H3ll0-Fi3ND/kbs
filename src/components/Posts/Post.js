@@ -3,12 +3,12 @@ import Tag from "../../ui/Tag";
 import PostComment from "./PostComment";
 import AddComment from "./AddComment";
 import API from "../../env";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 
 const Post = ({ post, index, userPost }) => {
   const ctx = useContext(UserContext);
 
-  const posts = post.tags.map((tag, index) => <Tag name={tag} key={index} />);
+  const tags = post.tags.map((tag, index) => <Tag name={tag} key={index} />);
 
   const comments = post.comments.map((comment) => (
     <PostComment id={comment.id} key={comment.id} comment={comment} />
@@ -71,11 +71,11 @@ const Post = ({ post, index, userPost }) => {
               className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Zgłoś</a>
+                <p>Zgłoś</p>
               </li>
               {userPost && (
                 <li>
-                  <a onClick={() => deletePostHandler(post.id)}>Usuń</a>
+                  <p onClick={() => deletePostHandler(post.id)}>Usuń</p>
                 </li>
               )}
             </ul>
@@ -96,7 +96,7 @@ const Post = ({ post, index, userPost }) => {
           className="w-full"
         />
       </figure>
-      <div className="flex justify-start p-4">{posts}</div>
+      <div className="flex justify-start p-4">{tags}</div>
       <div className="card-body text-left">
         <p className="text-m">{post.body}</p>
       </div>

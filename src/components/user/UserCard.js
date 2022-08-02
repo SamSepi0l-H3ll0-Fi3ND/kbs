@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import UserInfoBig from "./UserInfoBig";
 import EditUserInfo from "./EditUserInfo";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 
 import loginImg from "../../assets/imgs/userLogin.svg";
 

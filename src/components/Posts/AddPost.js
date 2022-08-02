@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Cookies from "universal-cookie";
 
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 import API from "../../env";
 
 import Checkbox from "../../ui/Checkbox";
@@ -18,8 +18,8 @@ const AddPost = () => {
     const newTags = [...tags];
 
     if (newTags.includes(e.target.value)) {
-      const xd = newTags.filter((t) => t !== e.target.value);
-      setTags(xd);
+      const tagMapped = newTags.filter((t) => t !== e.target.value);
+      setTags(tagMapped);
     } else {
       newTags.push(e.target.value);
       setTags(newTags);

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 
 import API from "../../env";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 import TagInput from "../../ui/TagInput";
 import Avatar from "./Avatar";
 import Album from "./Album";
@@ -40,10 +40,6 @@ const EditUserInfo = () => {
       userData.user.description = data.description;
 
       ctx.setUserData(userData);
-
-      // setDescription("");
-
-      //WYsyłanie zdjęcia
 
       if (photo) {
         const form = await new FormData();

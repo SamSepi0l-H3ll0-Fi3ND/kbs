@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import PostsList from "./PostsList";
 import AddPost from "./AddPost";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 
 import API from "../../env";
 

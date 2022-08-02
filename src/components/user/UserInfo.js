@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 import API from "../../env";
 
 import { Link } from "react-router-dom";

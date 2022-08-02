@@ -10,7 +10,7 @@ import HomePage from "./pages/HomePage";
 import Site404 from "./pages/Site404";
 
 import Dashboard from "./pages/Dashboard";
-import UserContext from "./UserContext";
+import UserContext from "./store/UserContext";
 
 function App() {
   const ctx = useContext(UserContext);

@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 import loginImg from "../assets/imgs/login.svg";
-import UserContext from "../UserContext";
+import UserContext from "../store/UserContext";
 import API from "../env";
 
 const LoginForm = () => {

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 
-import userContext from "../../UserContext";
+import userContext from "../../store/UserContext";
 import noPostsImg from "../../assets/imgs/noPosts.png";
 import API from "../../env";
 import Post from "./Post";
