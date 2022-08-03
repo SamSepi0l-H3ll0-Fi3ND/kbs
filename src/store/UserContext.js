@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from "react";
-import API from "../env";
 import Cookies from "universal-cookie";
 import useHttp from "../hooks/useHttp";
 
@@ -18,17 +17,9 @@ const UserContext = createContext({
 export const UserContextProvider = (props) => {
   const cookies = new Cookies();
 
-  const {
-    isLoading: postsIsLoading,
-    error: postsError,
-    sendRequest: postsRequest,
-  } = useHttp();
+  const { sendRequest: postsRequest } = useHttp();
 
-  const {
-    isLoading: userDataIsLoading,
-    error: userDataError,
-    sendRequest: userDataRequest,
-  } = useHttp();
+  const { sendRequest: userDataRequest } = useHttp();
 
   const [userData, setUserData] = useState({
     user: {
@@ -64,8 +55,7 @@ export const UserContextProvider = (props) => {
         Authorization: `Bearer ${cookies.get("token")}`,
       },
     });
-    // console.log(userData.data);
-    // console.log({ user: userData, token: cookies.get("token") });
+
     setUserData({ user: userData.data, token: cookies.get("token") });
   };
 
@@ -76,17 +66,6 @@ export const UserContextProvider = (props) => {
       if (cookies.get("token")) {
         try {
           await getUserData();
-          // const response = await fetch(`${API}/api/user`, {
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     Accept: "application/json",
-          //     Authorization: `Bearer ${cookies.get("token")}`,
-          //   },
-          // }).then((data) => data.json());
-          //
-          // console.log(response.data);
-          // const ussr = { user: response.data, token: cookies.get("token") };
-          // setUserData(ussr);
         } catch (e) {
           console.error(e);
         }
