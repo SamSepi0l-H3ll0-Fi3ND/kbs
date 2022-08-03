@@ -1,4 +1,10 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import Cookies from "universal-cookie";
 import useHttp from "../hooks/useHttp";
 
@@ -15,7 +21,7 @@ const UserContext = createContext({
 });
 
 export const UserContextProvider = (props) => {
-  const cookies = new Cookies();
+  const cookies = useMemo(() => new Cookies(), []);
 
   const { sendRequest: postsRequest } = useHttp();
 
@@ -40,13 +46,13 @@ export const UserContextProvider = (props) => {
   const [userPosts, setUserPosts] = useState([]);
   const [theme, setTheme] = useState(localStorage.theme);
 
-  const getPosts = async () => {
+  const getPosts = useCallback(async () => {
     const posts = await postsRequest({ url: "/api/posts" });
 
     setPosts(posts);
-  };
+  }, [postsRequest]);
 
-  const getUserData = async () => {
+  const getUserData = useCallback(async () => {
     const userData = await userDataRequest({
       url: "/api/user",
       headers: {
@@ -57,7 +63,7 @@ export const UserContextProvider = (props) => {
     });
 
     setUserData({ user: userData.data, token: cookies.get("token") });
-  };
+  }, [userDataRequest, cookies]);
 
   useEffect(() => {
     (async () => {
@@ -71,7 +77,7 @@ export const UserContextProvider = (props) => {
         }
       }
     })();
-  }, []);
+  }, [cookies, getPosts, getUserData]);
 
   return (
     <UserContext.Provider
