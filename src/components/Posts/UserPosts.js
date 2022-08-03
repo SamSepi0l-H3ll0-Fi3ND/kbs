@@ -40,7 +40,7 @@ const UserPosts = () => {
         ctx.setUserPosts(data);
       })();
     }
-  }, [token]);
+  });
 
   return <div className={classes}>{loadPosts()}</div>;
 };

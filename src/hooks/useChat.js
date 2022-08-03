@@ -12,7 +12,7 @@ const useChat = () => {
     setMessages(Object.entries(data));
   };
 
-  const sendMessage = async (user, message) => {
+  const sendMessage = async (user, message, id) => {
     try {
       await fetch(
         `https://kbchat-308b7-default-rtdb.europe-west1.firebasedatabase.app/${connection}.json`,
@@ -25,6 +25,7 @@ const useChat = () => {
           body: JSON.stringify({
             message,
             user,
+            id,
           }),
         }
       );

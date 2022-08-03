@@ -7,11 +7,11 @@ import UserCard from "../components/user/UserCard";
 import Nav from "../components/Nav";
 import UserInfo from "../components/user/UserInfo";
 import PostsContainer from "../components/Posts/PostsContainer";
-import SearchPost from "../components/Posts/SearchPost";
+import Search from "../components/Search";
 import UserPosts from "../components/Posts/UserPosts";
 import logoImg from "../assets/imgs/logo.svg";
 import Site404 from "./Site404";
-import Chat from "../components/Chat";
+import Friends from "../components/friends/Friends";
 
 const Dashboard = () => {
   const ctx = useContext(UserContext);
@@ -47,8 +47,8 @@ const Dashboard = () => {
       <div className="divider lg:divider-horizontal lg:order-last p-2"></div>
 
       <div className="flex flex-col justify-between gap-4 lg:order-last">
-        <SearchPost />
-        <Chat />
+        <Search />
+        <Friends />
       </div>
 
       <div className="divider lg:divider-horizontal p-2"></div>

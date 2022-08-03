@@ -3,7 +3,7 @@ import UserContext from "../../store/UserContext";
 import API from "../../env";
 
 import { Link } from "react-router-dom";
-import Switcher from "../SwitcherButton";
+import Switcher from "../theme/SwitcherButton";
 
 const UserInfo = () => {
   const ctx = useContext(UserContext);

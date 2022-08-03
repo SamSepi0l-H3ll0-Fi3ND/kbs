@@ -1,4 +1,4 @@
-import API from "../env";
+import API from "../../env";
 
 const Friend = ({
   friendAvatar,
@@ -30,7 +30,7 @@ const Friend = ({
   return (
     <div
       onClick={() => setConnection(connectionString)}
-      className="flex items-center justify-center space-x-3 bg-base-300 p-2 rounded-box shadow-lg md:w-50"
+      className="flex items-center justify-center space-x-3 bg-base-300 p-2 rounded-box shadow-lg"
     >
       <div className="flex avatar">
         <div className="mask mask-squircle w-12 h-12">

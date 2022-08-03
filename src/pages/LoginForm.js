@@ -42,6 +42,7 @@ const LoginForm = () => {
         document.querySelector("#password").classList.add("notValid");
       }
     } catch (e) {
+      console.log(e, e.message);
       setIsValid(!isValid);
     }
   };

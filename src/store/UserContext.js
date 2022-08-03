@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import API from "../env";
 import Cookies from "universal-cookie";
+import useHttp from "../hooks/useHttp";
 
 const UserContext = createContext({
   userData: {},
@@ -16,6 +17,18 @@ const UserContext = createContext({
 
 export const UserContextProvider = (props) => {
   const cookies = new Cookies();
+
+  const {
+    isLoading: postsIsLoading,
+    error: postsError,
+    sendRequest: postsRequest,
+  } = useHttp();
+
+  const {
+    isLoading: userDataIsLoading,
+    error: userDataError,
+    sendRequest: userDataRequest,
+  } = useHttp();
 
   const [userData, setUserData] = useState({
     user: {
@@ -37,28 +50,43 @@ export const UserContextProvider = (props) => {
   const [theme, setTheme] = useState(localStorage.theme);
 
   const getPosts = async () => {
-    const response = await fetch(`${API}/api/posts`);
-    const data = await response.json();
+    const posts = await postsRequest({ url: "/api/posts" });
 
-    setPosts(data);
+    setPosts(posts);
+  };
+
+  const getUserData = async () => {
+    const userData = await userDataRequest({
+      url: "/api/user",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${cookies.get("token")}`,
+      },
+    });
+    // console.log(userData.data);
+    // console.log({ user: userData, token: cookies.get("token") });
+    setUserData({ user: userData.data, token: cookies.get("token") });
   };
 
   useEffect(() => {
-    getPosts();
-
     (async () => {
+      await getPosts();
+
       if (cookies.get("token")) {
         try {
-          const response = await fetch(`${API}/api/user`, {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${cookies.get("token")}`,
-            },
-          }).then((data) => data.json());
-
-          const ussr = { user: response.data, token: cookies.get("token") };
-          setUserData(ussr);
+          await getUserData();
+          // const response = await fetch(`${API}/api/user`, {
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     Accept: "application/json",
+          //     Authorization: `Bearer ${cookies.get("token")}`,
+          //   },
+          // }).then((data) => data.json());
+          //
+          // console.log(response.data);
+          // const ussr = { user: response.data, token: cookies.get("token") };
+          // setUserData(ussr);
         } catch (e) {
           console.error(e);
         }

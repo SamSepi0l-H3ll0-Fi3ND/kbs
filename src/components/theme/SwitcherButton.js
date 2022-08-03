@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useDarkSide from "../hooks/useDarkSide";
+import useDarkSide from "../../hooks/useDarkSide";
 
 export default function Switcher() {
   const [colorTheme, setTheme] = useDarkSide();

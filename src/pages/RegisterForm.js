@@ -108,7 +108,7 @@ const RegisterForm = () => {
                 </label>
                 <input
                   id="email"
-                  type="text"
+                  type="email"
                   placeholder="email"
                   className="input input-bordered"
                   onChange={(e) => {
