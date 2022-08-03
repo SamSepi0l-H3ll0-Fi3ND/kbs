@@ -12,13 +12,12 @@ const useHttp = () => {
     try {
       const response = await fetch(`${API}${requestConfig.url}`, {
         method: requestConfig.method,
-        headers:
-          requestConfig === null
-            ? {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              }
-            : requestConfig.headers,
+        headers: !requestConfig
+          ? {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            }
+          : requestConfig.headers,
         body: JSON.stringify(requestConfig.body),
       });
 
