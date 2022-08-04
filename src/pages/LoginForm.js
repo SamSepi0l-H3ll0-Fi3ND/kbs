@@ -12,7 +12,6 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
-  const [userData, setUserData] = useState();
 
   const loginFormHandler = async (e) => {
     e.preventDefault();
@@ -34,7 +33,6 @@ const LoginForm = () => {
       setIsValid(resp.ok);
       const data = await resp.json();
       ctx.setUserData(data);
-      setUserData(data);
       await cookies.set("token", data.token, { path: "/" });
 
       if (!resp.ok) {

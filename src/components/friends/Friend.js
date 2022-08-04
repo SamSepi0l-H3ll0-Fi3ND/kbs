@@ -1,19 +1,12 @@
 import API from "../../env";
+import { Link } from "react-router-dom";
 
-const Friend = ({
-  friendAvatar,
-  friendName,
-  friendEmail,
-  friendId,
-  userId,
-  userEmail,
-  setConnection,
-}) => {
+const Friend = ({ friend, userId, userEmail, setConnection }) => {
   let connectionString;
 
-  if (friendEmail && userEmail) {
-    if (userId > friendId) {
-      connectionString = `${friendEmail
+  if (friend.email && userEmail) {
+    if (userId > friend.id) {
+      connectionString = `${friend.email
         .replaceAll(".", "")
         .replaceAll("@", "")}${userEmail
         .replaceAll(".", "")
@@ -21,23 +14,29 @@ const Friend = ({
     } else {
       connectionString = `${userEmail
         .replaceAll(".", "")
-        .replaceAll("@", "")}${friendEmail
+        .replaceAll("@", "")}${friend.email
         .replaceAll(".", "")
         .replaceAll("@", "")}`;
     }
   }
 
   return (
-    <div
-      onClick={() => setConnection(connectionString)}
-      className="flex items-center justify-center space-x-3 bg-base-300 p-2 rounded-box shadow-lg"
-    >
-      <div className="flex avatar">
-        <div className="mask mask-squircle w-12 h-12">
-          <img src={`${API}${friendAvatar}`} alt="User Avatar" />
+    <div>
+      <Link
+        to="./strangerinfo"
+        onClick={() => setConnection(connectionString)}
+        state={{ stranger: friend }}
+        className="flex items-center justify-center space-x-3 bg-base-300 p-2 rounded-box shadow-lg"
+      >
+        <div className="flex avatar">
+          <div className="mask mask-squircle w-12 h-12">
+            <img src={`${API}${friend.avatar_url}`} alt="User Avatar" />
+          </div>
         </div>
-      </div>
-      <div className="font-bold lg:grid justify-items-center">{friendName}</div>
+        <div className="font-bold lg:grid justify-items-center">
+          {friend.name}
+        </div>
+      </Link>
     </div>
   );
 };

@@ -3,13 +3,13 @@ import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
 
-import LoginForm from "./pages/LoginForm";
-import RegisterForm from "./pages/RegisterForm";
+import Site404 from "./pages/Site404";
 import HomePage from "./pages/HomePage";
 
-import Site404 from "./pages/Site404";
-
+import LoginForm from "./pages/LoginForm";
+import RegisterForm from "./pages/RegisterForm";
 import Dashboard from "./pages/Dashboard";
+
 import UserContext from "./store/UserContext";
 
 function App() {

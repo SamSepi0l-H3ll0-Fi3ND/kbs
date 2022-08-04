@@ -1,31 +1,23 @@
 import React, { useState, useContext } from "react";
-import UserContext from "../store/UserContext";
-import useHttp from "../hooks/useHttp";
+import PostsContext from "../store/PostsContext";
+import StrangersContext from "../store/StrangersContext";
 
 const Search = () => {
-  const ctx = useContext(UserContext);
+  const postCtx = useContext(PostsContext);
+  const strangersCtx = useContext(StrangersContext);
+
   const [inputValue, setInputValue] = useState("");
   const [selectOption, setSelectOption] = useState("tags");
-
-  const { sendRequest } = useHttp();
 
   const searchHandler = async (e) => {
     e.preventDefault();
     try {
       if (selectOption === "tags") {
-        const data = await sendRequest({ url: `/api/posts/tag/${inputValue}` });
-        ctx.setPosts(data);
+        postCtx.searchPosts(inputValue);
       }
       if (selectOption === "users") {
-        const data = await sendRequest({
-          url: `/api/users/search`,
-          method: "POST",
-          body: { str: inputValue },
-        });
-
-        console.log(data);
+        strangersCtx.getStrangers(inputValue);
       }
-
       setInputValue("");
     } catch (e) {
       console.warn(e.message);
