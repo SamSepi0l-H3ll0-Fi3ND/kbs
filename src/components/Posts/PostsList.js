@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 
 import Post from "./Post";
-import UserContext from "../../store/UserContext";
+import PostsContext from "../../store/PostsContext";
 
 const PostLists = () => {
-  const ctx = useContext(UserContext);
-
+  const ctx = useContext(PostsContext);
   const { posts } = ctx;
 
   const postsToDisplay = posts.map((post, index) => (

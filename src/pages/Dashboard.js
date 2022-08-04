@@ -3,6 +3,8 @@ import { Route, Routes, Link } from "react-router-dom";
 
 import UserContext from "../store/UserContext";
 
+import DashboardWrapper from "../ui/DashboardWrapper";
+
 import UserCard from "../components/user/UserCard";
 import Nav from "../components/Nav";
 import UserInfo from "../components/user/UserInfo";
@@ -13,13 +15,15 @@ import logoImg from "../assets/imgs/logo.svg";
 import Site404 from "./Site404";
 import Friends from "../components/friends/Friends";
 
+import { PostsContextProvider } from "../store/PostsContext";
+
 const Dashboard = () => {
   const ctx = useContext(UserContext);
 
   const { token } = ctx.userData;
 
   return (
-    <div className="p-6 flex flex-col min-w-min lg:flex-row min-h-screen md:max-h-screen">
+    <DashboardWrapper>
       <div className="flex justify-between lg:flex-col">
         <div className="flex items-center justify-between gap-4 lg:flex-col">
           <img
@@ -48,20 +52,22 @@ const Dashboard = () => {
 
       <div className="flex flex-col justify-between gap-4 lg:order-last">
         <Search />
-        <Friends />
+        {/*<Friends />*/}
       </div>
 
       <div className="divider lg:divider-horizontal p-2"></div>
 
-      <div className="grid grow gap-4 flex-1">
-        <Routes>
-          <Route path="*" element={<Site404 />} />
-          <Route path="/" element={<PostsContainer />} />
-          <Route path="/usersettings" element={<UserCard />} />
-          <Route path="/myposts" element={<UserPosts />} />
-        </Routes>
-      </div>
-    </div>
+      <PostsContextProvider>
+        <div className="grid grow gap-4 flex-1">
+          <Routes>
+            <Route path="*" element={<Site404 />} />
+            <Route path="/" element={<PostsContainer />} />
+            <Route path="/usersettings" element={<UserCard />} />
+            <Route path="/myposts" element={<UserPosts />} />
+          </Routes>
+        </div>
+      </PostsContextProvider>
+    </DashboardWrapper>
   );
 };
 

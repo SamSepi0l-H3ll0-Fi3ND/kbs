@@ -4,9 +4,11 @@ import PostComment from "./PostComment";
 import AddComment from "./AddComment";
 import API from "../../env";
 import UserContext from "../../store/UserContext";
+import PostsContext from "../../store/PostsContext";
 
 const Post = ({ post, index, userPost }) => {
-  const ctx = useContext(UserContext);
+  const userContext = useContext(UserContext);
+  const postsContext = useContext(PostsContext);
 
   const tags = post.tags.map((tag, index) => <Tag name={tag} key={index} />);
 
@@ -35,10 +37,10 @@ const Post = ({ post, index, userPost }) => {
     });
     const { comments } = await resp.json();
 
-    const postUpdated = [...ctx.posts];
+    const postUpdated = [...postsContext.posts];
     postUpdated[index].comments = comments;
 
-    ctx.setPosts(postUpdated);
+    postsContext.setPosts(postUpdated);
   };
 
   const deletePostHandler = async (postId) => {
@@ -47,15 +49,17 @@ const Post = ({ post, index, userPost }) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${ctx.userData.token}`,
+        Authorization: `Bearer ${userContext.userData.token}`,
       },
       body: JSON.stringify({
         postId,
       }),
     });
 
-    const userPosts = [...ctx.userPosts].filter((post) => post.id !== postId);
-    ctx.setUserPosts(userPosts);
+    const userPosts = [...postsContext.userPosts].filter(
+      (post) => post.id !== postId
+    );
+    postsContext.setUserPosts(userPosts);
   };
 
   return (
@@ -101,7 +105,9 @@ const Post = ({ post, index, userPost }) => {
         <p className="text-m">{post.body}</p>
       </div>
       {displayComments}
-      {ctx.userData.token && <AddComment id={post.id} postIndex={index} />}
+      {userContext.userData.token && (
+        <AddComment id={post.id} postIndex={index} />
+      )}
       {displayComments && (
         <button className="btn btn-primary" onClick={loadMoreCommentsHandler}>
           Load more comments

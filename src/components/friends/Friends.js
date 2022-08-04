@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect, useMemo } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import useChat from "../../hooks/useChat";
 import UserContext from "../../store/UserContext";
 import Friend from "./Friend";
@@ -16,7 +16,13 @@ const Friends = () => {
 
   useEffect(() => {
     setIsLoaded(true);
-  });
+    if (isLoaded) {
+      messagesBoxRef.current.lastChild.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [setIsLoaded, messages]);
 
   const { name, email, id } = ctx.userData.user;
 
@@ -25,17 +31,7 @@ const Friends = () => {
     await sendMessage(name, inputValue, id);
 
     setInputValue("");
-    console.log(messagesBoxRef);
   };
-
-  useEffect(() => {
-    if (isLoaded) {
-      messagesBoxRef.current.lastChild.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }, [messages]);
 
   let friendName = !isLoading ? friends[29].name : "Loading...";
   let friendAvatar = !isLoading ? friends[29].avatar_url : "";

@@ -5,9 +5,11 @@ import UserContext from "../../store/UserContext";
 import API from "../../env";
 
 import Checkbox from "../../ui/Checkbox";
+import PostsContext from "../../store/PostsContext";
 
 const AddPost = () => {
-  const ctx = useContext(UserContext);
+  const userContext = useContext(UserContext);
+  const postsContext = useContext(PostsContext);
 
   const cookies = new Cookies();
 
@@ -44,7 +46,7 @@ const AddPost = () => {
 
     const newPost = await resp.json();
 
-    ctx.setPosts((prevPosts) => [newPost, ...prevPosts]);
+    postsContext.setPosts((prevPosts) => [newPost, ...prevPosts]);
 
     setPostInput("");
   };

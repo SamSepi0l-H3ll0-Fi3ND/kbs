@@ -12,7 +12,7 @@ const useHttp = () => {
     try {
       const response = await fetch(`${API}${requestConfig.url}`, {
         method: requestConfig.method,
-        headers: !requestConfig
+        headers: !requestConfig.headers
           ? {
               "Content-Type": "application/json",
               Accept: "application/json",
@@ -24,12 +24,12 @@ const useHttp = () => {
       if (!response.ok) {
         throw new Error("Request failed!");
       }
+      setIsLoading(false);
 
       return await response.json();
     } catch (err) {
       setError(err.message || "Something went wrong!");
     }
-    setIsLoading(false);
   }, []);
 
   return {

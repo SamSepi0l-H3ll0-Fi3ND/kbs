@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import API from "../env";
-import UserContext from "../store/UserContext";
+import PostsContext from "../store/PostsContext";
 
 const useSortPostsByTag = (tagValue) => {
-  const ctx = useContext(UserContext);
+  const postsContext = useContext(PostsContext);
 
   return async () => {
     const response = await fetch(`${API}/api/posts/tag/${tagValue}`);
     const data = await response.json();
 
-    ctx.setPosts(data);
+    postsContext.setPosts(data);
   };
 };
 
