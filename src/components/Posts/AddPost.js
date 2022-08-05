@@ -1,13 +1,15 @@
 import React, { useContext, useState } from "react";
 import Cookies from "universal-cookie";
 
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 import API from "../../env";
 
 import Checkbox from "../../ui/Checkbox";
+import PostsContext from "../../store/PostsContext";
 
 const AddPost = () => {
-  const ctx = useContext(UserContext);
+  const userContext = useContext(UserContext);
+  const postsContext = useContext(PostsContext);
 
   const cookies = new Cookies();
 
@@ -18,8 +20,8 @@ const AddPost = () => {
     const newTags = [...tags];
 
     if (newTags.includes(e.target.value)) {
-      const xd = newTags.filter((t) => t !== e.target.value);
-      setTags(xd);
+      const tagMapped = newTags.filter((t) => t !== e.target.value);
+      setTags(tagMapped);
     } else {
       newTags.push(e.target.value);
       setTags(newTags);
@@ -44,14 +46,14 @@ const AddPost = () => {
 
     const newPost = await resp.json();
 
-    ctx.setPosts((prevPosts) => [newPost, ...prevPosts]);
+    postsContext.setPosts((prevPosts) => [newPost, ...prevPosts]);
 
     setPostInput("");
   };
 
   return (
     <form onSubmit={addPostHandler}>
-      <div className="card w-full bg-base-300 p-4 shadow-lg">
+      <div className="card w-full bg-base-300 p-4 mb-4 shadow-lg">
         <div className="form-control">
           <div className="input-group max-h-16">
             <textarea
@@ -78,7 +80,7 @@ const AddPost = () => {
             </button>
           </div>
         </div>
-        <div className="form-control flex flex-row gap-4">
+        <div className="form-control flex flex-row gap-2 flex-wrap">
           <Checkbox text="#Sport" addTagHandler={addTagHandler} />
           <Checkbox text="#Music" addTagHandler={addTagHandler} />
           <Checkbox text="#Coś" addTagHandler={addTagHandler} />

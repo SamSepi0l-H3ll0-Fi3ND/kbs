@@ -1,13 +1,20 @@
 import React, { useState, useContext } from "react";
 
 import API from "../../env";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
+import TagInput from "../../ui/TagInput";
+import Avatar from "./Avatar";
+import Album from "./Album";
 
 const EditUserInfo = () => {
   const ctx = useContext(UserContext);
-  // const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState([1, 2, 3]);
+
+  const { description: userDesc, tags: userTags } = ctx.userData.user;
+
+  const [description, setDescription] = useState(userDesc);
+  const [tags, setTags] = useState(userTags);
+  const [photo, setPhoto] = useState();
+  const [photos, setPhotos] = useState([]);
 
   const onSubmitHandler = async () => {
     try {
@@ -20,7 +27,7 @@ const EditUserInfo = () => {
         },
         body: JSON.stringify({
           description,
-          tags: tags,
+          tags: tags.filter((n) => n),
         }),
       });
 
@@ -32,7 +39,36 @@ const EditUserInfo = () => {
 
       ctx.setUserData(userData);
 
-      setDescription("");
+      if (photo) {
+        const form = await new FormData();
+        await form.append("avatar", photo);
+        await fetch(`${API}/api/photos/upload`, {
+          method: "post",
+          headers: {
+            "Context-type": "multipart/form-data",
+            Accept: "application/json",
+            Authorization: "Bearer 12|bPeswddM0gJhKDleakygQG2Y0FEVdJ1O1HFWSblX",
+          },
+          body: form,
+        }).then((data) => data.json());
+      }
+
+      if (photos) {
+        const form = await new FormData();
+        photos.forEach((photo) => {
+          form.append("avatar", photo);
+        });
+
+        await fetch(`${API}/api/photos/upload`, {
+          method: "post",
+          headers: {
+            "Context-type": "multipart/form-data",
+            Accept: "application/json",
+            Authorization: "Bearer 12|bPeswddM0gJhKDleakygQG2Y0FEVdJ1O1HFWSblX",
+          },
+          body: form,
+        }).then((data) => data.json());
+      }
     } catch (e) {
       console.error(e);
     }
@@ -42,18 +78,6 @@ const EditUserInfo = () => {
     <div className="card bg-base-300 shadow-lg">
       <div className="card-body flex items-center justify-center">
         <h2 className="card-title">Edit your profile!</h2>
-        {/*<div className="form-control w-full max-w-xs">*/}
-        {/*  <label className="label">*/}
-        {/*    <span className="label-text">Name</span>*/}
-        {/*  </label>*/}
-        {/*  <input*/}
-        {/*    type="text"*/}
-        {/*    placeholder="Change name here"*/}
-        {/*    className="input input-bordered w-full max-w-xs"*/}
-        {/*    onChange={(e) => setName(e.target.value)}*/}
-        {/*    value={name}*/}
-        {/*  />*/}
-        {/*</div>*/}
         <div className="form-control w-full max-w-xs">
           <label className="label">
             <span className="label-text">Description</span>
@@ -69,47 +93,40 @@ const EditUserInfo = () => {
             <span className="label-text">Tags</span>
           </label>
           <div>
-            <div className="badge badge-outline mt-2">
-              <input
-                type="text"
-                placeholder="Change first tag here"
-                className=" text-gray-100 badge-outline"
+            {tags.map((tag, index) => (
+              <TagInput
+                id={index}
+                key={index}
+                tagValue={tag}
+                tags={tags}
+                setTags={setTags}
               />
-            </div>
-            <div className="badge badge-outline mt-4">
-              <input
-                type="text"
-                placeholder="Change second tag here"
-                className=" text-gray-100  badge-outline"
-              />
-            </div>
-            <div className="badge  badge-outline mt-4">
-              <input
-                type="text"
-                placeholder="Change third tag here"
-                className=" text-gray-100 badge-outline"
-              />
-            </div>
-            <div className="badge  badge-outline mt-4">
-              <input
-                type="text"
-                placeholder="Change fourth tag here"
-                className=" text-gray-100 badge-outline"
-              />
-            </div>
+            ))}
+            <TagInput
+              id={tags.length}
+              key={tags.length}
+              tagValue={""}
+              tags={tags}
+              setTags={setTags}
+            />
           </div>
         </div>
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">Avatar</span>
-          </label>
-          <div className="indicator">
-            <span className="indicator-item indicator-center indicator-middle badge badge-primary">
-              Upload avatar +
-            </span>
-            <img src="https://placeimg.com/300/150/arch" />
-          </div>
-        </div>
+        {/*<div className="form-control w-full max-w-xs flex items-center">*/}
+        {/*  <label className="label">*/}
+        {/*    <span className="label-text">Avatar</span>*/}
+        {/*  </label>*/}
+        {/*  <div className="indicator w-52 lg:w-max">*/}
+        {/*    <span className="indicator-item indicator-center indicator-middle badge badge-primary">*/}
+        {/*      Upload avatar +*/}
+        {/*    </span>*/}
+        {/*    <img*/}
+        {/*      className="aspect-auto "*/}
+        {/*      src="https://placeimg.com/300/150/arch"*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+        <Avatar photo={photo} setPhoto={setPhoto} />
+        <Album photos={photos} setPhotos={setPhotos} />
         <div className="card-actions justify-center">
           <button className="btn btn-primary mt-4" onClick={onSubmitHandler}>
             Confirm changes

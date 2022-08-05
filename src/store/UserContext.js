@@ -1,18 +1,27 @@
-import React, { createContext, useState, useEffect } from "react";
-import API from "./env";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
+
 import Cookies from "universal-cookie";
+import useHttp from "../hooks/useHttp";
 
 const UserContext = createContext({
   userData: {},
   setUserData: () => {},
-  posts: [],
-  setPosts: () => {},
   userPosts: [],
   setUserPosts: () => {},
+  theme: localStorage.theme,
+  setTheme: () => {},
 });
 
 export const UserContextProvider = (props) => {
-  const cookies = new Cookies();
+  const cookies = useMemo(() => new Cookies(), []);
+
+  const { sendRequest: userDataRequest } = useHttp();
 
   const [userData, setUserData] = useState({
     user: {
@@ -24,50 +33,48 @@ export const UserContextProvider = (props) => {
       avatar_url: null,
       created_at: null,
       updated_at: null,
-      tags: [],
+      tags: null,
     },
     token: null,
   });
 
-  const [posts, setPosts] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
+  const [theme, setTheme] = useState(localStorage.theme);
+
+  const getUserData = useCallback(async () => {
+    const userData = await userDataRequest({
+      url: "/api/user",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${cookies.get("token")}`,
+      },
+    });
+
+    setUserData({ user: userData.data, token: cookies.get("token") });
+  }, [userDataRequest, cookies]);
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`${API}/api/posts`);
-      const data = await response.json();
-
-      setPosts(data);
-    })();
-
-    (async () => {
       if (cookies.get("token")) {
         try {
-          const response = await fetch(`${API}/api/user`, {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${cookies.get("token")}`,
-            },
-          }).then((data) => data.json());
-          const ussr = { user: response, token: cookies.get("token") };
-          setUserData(ussr);
+          await getUserData();
         } catch (e) {
           console.error(e);
         }
       }
     })();
-  }, []);
+  }, [cookies, getUserData]);
 
   return (
     <UserContext.Provider
       value={{
         userData,
         setUserData,
-        posts,
-        setPosts,
         userPosts,
         setUserPosts,
+        theme,
+        setTheme,
       }}
     >
       {props.children}

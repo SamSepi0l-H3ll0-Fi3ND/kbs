@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 
 import Post from "./Post";
-import UserContext from "../../UserContext";
+import PostsContext from "../../store/PostsContext";
 
 const PostLists = () => {
-  const ctx = useContext(UserContext);
-
+  const ctx = useContext(PostsContext);
   const { posts } = ctx;
 
   const postsToDisplay = posts.map((post, index) => (
@@ -13,7 +12,9 @@ const PostLists = () => {
   ));
 
   return (
-    <div className="overflow-y-scroll scrollbar-hide">{postsToDisplay}</div>
+    <div className="md:overflow-y-scroll scrollbar-hide md:overflow-hidden">
+      {postsToDisplay}
+    </div>
   );
 };
 

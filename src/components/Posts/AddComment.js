@@ -1,9 +1,12 @@
 import React, { useState, useContext } from "react";
 import API from "../../env";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
+import PostsContext from "../../store/PostsContext";
 
 const AddComment = ({ id, postIndex }) => {
-  const ctx = useContext(UserContext);
+  const userContext = useContext(UserContext);
+
+  const postsContext = useContext(PostsContext);
 
   const [commentText, setCommentText] = useState("");
 
@@ -14,7 +17,7 @@ const AddComment = ({ id, postIndex }) => {
       const resp = await fetch(`${API}/api/posts/${id}/comments/add`, {
         method: "PUT",
         headers: {
-          Authorization: `Bearer ${ctx.userData.token}`,
+          Authorization: `Bearer ${userContext.userData.token}`,
           "Content-Type": "application/json",
           Accept: "application/json",
         },
@@ -25,10 +28,10 @@ const AddComment = ({ id, postIndex }) => {
       });
 
       const newComment = await resp.json();
-      const updatedComments = [...ctx.posts];
+      const updatedComments = [...postsContext.posts];
       updatedComments.splice(postIndex, 1, newComment);
 
-      ctx.setPosts(updatedComments);
+      postsContext.setPosts(updatedComments);
 
       setCommentText("");
     } catch (e) {

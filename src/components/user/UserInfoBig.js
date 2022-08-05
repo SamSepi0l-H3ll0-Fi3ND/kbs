@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import API from "../../env";
 import Tag from "../../ui/Tag";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 
 const UserInfoBig = () => {
   const ctx = useContext(UserContext);
@@ -20,7 +20,7 @@ const UserInfoBig = () => {
         <p>{email}</p>
         <p>{description ? description : "Description"}</p>
 
-        <div className="flex justify-start w-full">
+        <div className="flex justify-center w-full gap-4">
           {tags
             ? tags.map((tag, index) => <Tag name={tag} key={index} />)
             : null}

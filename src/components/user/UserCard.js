@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import UserInfoBig from "./UserInfoBig";
 import EditUserInfo from "./EditUserInfo";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 
 import loginImg from "../../assets/imgs/userLogin.svg";
 
@@ -12,8 +12,8 @@ const UserCard = () => {
   const { token } = ctx.userData;
 
   let classes = token
-    ? "overflow-y-scroll scrollbar-hide"
-    : "overflow-y-scroll scrollbar-hide flex items-center";
+    ? "md:overflow-y-scroll scrollbar-hide md:overflow-hidden"
+    : "md:overflow-y-scroll scrollbar-hide flex items-center md:overflow-hidden";
 
   let data;
   if (!token) {

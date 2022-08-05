@@ -1,13 +1,26 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import PostsList from "./PostsList";
 import AddPost from "./AddPost";
-import UserContext from "../../UserContext";
+import UserContext from "../../store/UserContext";
 
-import API from "../../env";
+import PostsContext from "../../store/PostsContext";
+
+import { CirclesWithBar } from "react-loader-spinner";
 
 const PostsContainer = () => {
-  const ctx = useContext(UserContext);
-  const { token } = ctx.userData;
+  const userCtx = useContext(UserContext);
+  const { token } = userCtx.userData;
+
+  const postsCtx = useContext(PostsContext);
+  const { getPosts, postsIsLoading, postsError } = postsCtx;
+
+  useEffect(() => {
+    getPosts();
+  }, [getPosts]);
+
+  if (postsError) return <p>Error</p>;
+
+  if (postsIsLoading) return <CirclesWithBar color="#5014B8" />;
 
   return (
     <>

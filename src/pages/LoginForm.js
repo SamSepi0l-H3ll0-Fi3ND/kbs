@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 import loginImg from "../assets/imgs/login.svg";
-import UserContext from "../UserContext";
+import UserContext from "../store/UserContext";
 import API from "../env";
 
 const LoginForm = () => {
@@ -12,7 +12,6 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
-  const [userData, setUserData] = useState();
 
   const loginFormHandler = async (e) => {
     e.preventDefault();
@@ -34,7 +33,6 @@ const LoginForm = () => {
       setIsValid(resp.ok);
       const data = await resp.json();
       ctx.setUserData(data);
-      setUserData(data);
       await cookies.set("token", data.token, { path: "/" });
 
       if (!resp.ok) {
@@ -42,6 +40,7 @@ const LoginForm = () => {
         document.querySelector("#password").classList.add("notValid");
       }
     } catch (e) {
+      console.log(e, e.message);
       setIsValid(!isValid);
     }
   };
