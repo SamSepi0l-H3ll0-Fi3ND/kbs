@@ -28,7 +28,6 @@ const UserPosts = () => {
 
   useEffect(() => {
     if (token) getUserPosts(id);
-    console.log(token, userPosts);
   }, [id, token, getUserPosts]);
 
   return <div className={classes}>{loadedPosts}</div>;

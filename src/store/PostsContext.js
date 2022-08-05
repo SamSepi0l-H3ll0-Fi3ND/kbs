@@ -1,13 +1,14 @@
-import React, { createContext, useState, useCallback, useReducer } from "react";
+import React, { createContext, useState, useCallback } from "react";
 
 import useHttp from "../hooks/useHttp";
 
 const PostsContext = createContext({
   posts: [],
-  setPosts: () => {},
+  setPosts: () => { },
   userPosts: [],
-  setUserPosts: () => {},
-  getPosts: () => {},
+  setUserPosts: () => { },
+  getPosts: () => { },
+  searchPosts: () => { },
   postsIsLoading: null,
   postsError: null,
 });
@@ -39,13 +40,24 @@ export const PostsContextProvider = (props) => {
 
   const getUserPosts = useCallback(
     async (userId) => {
-      const posts = await userPostsRequest({
+      const userPosts = await userPostsRequest({
         url: `/api/posts/user/${userId}`,
       });
 
-      setUserPosts(posts);
+      setUserPosts(userPosts);
     },
     [userPostsRequest]
+  );
+
+  const searchPosts = useCallback(
+    async (inputValue) => {
+      const searchedPosts = await postsRequest({
+        url: `/api/posts/tag/${inputValue}`
+      });
+
+      setPosts(searchedPosts);
+    },
+    [postsRequest]
   );
 
   return (
@@ -57,6 +69,7 @@ export const PostsContextProvider = (props) => {
         setUserPosts,
         getPosts,
         getUserPosts,
+        searchPosts,
         postsError,
         postsIsLoading,
       }}

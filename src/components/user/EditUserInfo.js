@@ -12,9 +12,7 @@ const EditUserInfo = () => {
   const { description: userDesc, tags: userTags } = ctx.userData.user;
 
   const [description, setDescription] = useState(userDesc);
-  const [tags, setTags] = useState(
-    userTags.length === 0 ? ["", "", "", ""] : userTags
-  );
+  const [tags, setTags] = useState(userTags);
   const [photo, setPhoto] = useState();
   const [photos, setPhotos] = useState([]);
 
@@ -29,7 +27,7 @@ const EditUserInfo = () => {
         },
         body: JSON.stringify({
           description,
-          tags: tags,
+          tags: tags.filter((n) => n),
         }),
       });
 
@@ -104,6 +102,13 @@ const EditUserInfo = () => {
                 setTags={setTags}
               />
             ))}
+            <TagInput
+              id={tags.length}
+              key={tags.length}
+              tagValue={""}
+              tags={tags}
+              setTags={setTags}
+            />
           </div>
         </div>
         {/*<div className="form-control w-full max-w-xs flex items-center">*/}

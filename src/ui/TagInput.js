@@ -1,22 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const TagInput = ({ setTags, tagValue, id, tags }) => {
   const [tagInput, setTagInput] = useState(tagValue);
 
-  useEffect(() => {
-    const newTags = [...tags];
-
-    const intervalId = setTimeout(() => {
-      newTags[id] = tagInput;
-      console.log(newTags);
-      setTags(newTags);
-    }, 200);
-
-    return () => clearTimeout(intervalId);
-  }, [tagInput, id]);
-
   const onChangeHandler = (e) => {
     setTagInput(e.target.value);
+  };
+
+  const buttonHandle = () => {
+    const newTags = [...tags];
+    newTags[id] = tagInput;
+    setTags(newTags);
   };
 
   return (
@@ -28,6 +22,7 @@ const TagInput = ({ setTags, tagValue, id, tags }) => {
         onChange={(e) => onChangeHandler(e)}
         value={tagInput}
       />
+      <button onClick={buttonHandle}>I Save</button>
     </div>
   );
 };
